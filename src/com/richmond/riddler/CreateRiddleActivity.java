@@ -1,0 +1,229 @@
+package com.richmond.riddler;
+
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+public class CreateRiddleActivity extends Activity implements OnClickListener {
+	
+//    public static final int DIALOG_CREATE_RIDDLE_SUCCESS  = 0;
+    public static final int DIALOG_CREATE_RIDDLE_FAILURE  	= 1;
+    public static final int DIALOG_RIDDLE_ERROR    			= 2;
+    public static final int DIALOG_HINT_ERROR     		 	= 3;
+    public static final int DIALOG_LOCATION_ERROR      		= 4;
+
+    public AlertDialog mAlertDialog;
+	
+	private Button doneButton, pinRiddleOne, pinRiddleTwo, pinRiddleThree;
+	double distance;
+	private EditText 	riddle1, riddle2, riddle3, 
+						riddle1hint, riddle2hint, riddle3hint;
+	
+	double lat1, longi1, lat2, longi2, lat3, longi3; 
+	
+	public final static String RIDDLESANDHINTS 	= "com.richmond.riddler.MESSAGE";
+	public final static String DISTANCE 		= "com.richmond.riddler.DISTANCE";
+	public final static String LOCATION 		= "com.richmond.riddler.LOCATION";
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_create_riddle);
+
+		doneButton = (Button) findViewById(R.id.donebutton);
+		pinRiddleOne = (Button) findViewById(R.id.pinfirstriddle);
+		pinRiddleTwo = (Button) findViewById(R.id.pinsecondriddle);
+		pinRiddleThree = (Button) findViewById(R.id.pinthirdriddle);
+		
+		doneButton.setOnClickListener(this);
+		pinRiddleOne.setOnClickListener(this);
+		pinRiddleTwo.setOnClickListener(this);
+		pinRiddleThree.setOnClickListener(this);
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.activity_create_riddle, menu);
+		return true;
+	}
+
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.donebutton:
+			AddRiddleSequence(v);
+			break;
+		case R.id.pinfirstriddle:
+			Map(v, 1 );
+			break;
+		case R.id.pinsecondriddle:
+			Map(v, 2 );
+			break;
+		case R.id.pinthirdriddle:
+			Map(v, 3 );
+			break;
+		
+		}
+	}
+
+	private void Map(View v, int riddleNumber ) {
+		Intent intent = new Intent(this, LocationSelectionActivity.class);
+		startActivityForResult(intent, riddleNumber);
+	}
+
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+		if (requestCode == 1) {
+		     if(resultCode == RESULT_OK)
+		      longi1 = data.getDoubleExtra("resultLongitude", 1);
+		      lat1 = data.getDoubleExtra("resultLatitude", 1);
+		      Toast t = Toast.makeText(getBaseContext(), "longi " + longi1 + "lat " + lat1 , Toast.LENGTH_LONG);
+				t.show();
+		}
+		if (requestCode == 2) {
+		     if(resultCode == RESULT_OK)
+		      longi2 = data.getDoubleExtra("resultLongitude", 2);
+		      lat2 = data.getDoubleExtra("resultLatitude", 2);
+		      Toast t = Toast.makeText(getBaseContext(), "longi " + longi2 + "lat " + lat2 , Toast.LENGTH_LONG);
+				t.show();
+		}
+		if (requestCode == 3) {
+		     if(resultCode == RESULT_OK)
+		      longi3 = data.getDoubleExtra("resultLongitude", 3);
+		      lat3 = data.getDoubleExtra("resultLatitude", 3);
+		      Toast t = Toast.makeText(getBaseContext(), "longi " + longi3 + "lat " + lat3 , Toast.LENGTH_LONG);
+				t.show();
+		}
+
+		if (resultCode == RESULT_CANCELED) {
+
+		     //Write your code on no result return 
+
+		}
+	}// onAcrivityResult
+		
+
+	private void AddRiddleSequence(View v) {
+		
+		riddle1 	= (EditText) findViewById(R.id.riddle1);
+		riddle2 	= (EditText) findViewById(R.id.riddle2);
+		riddle3 	= (EditText) findViewById(R.id.riddle3);
+		riddle1hint = (EditText) findViewById(R.id.riddle1hint);
+		riddle2hint = (EditText) findViewById(R.id.riddle2hint);
+		riddle3hint = (EditText) findViewById(R.id.riddle3hint);
+		
+		if(validateFields()){
+	
+			Intent intent = new Intent(this, AddRiddleService.class);
+	
+			String[] riddleAndHints = 
+					{ 
+						riddle1.getText().toString(),
+						riddle2.getText().toString(), 
+						riddle3.getText().toString(),
+						riddle1hint.getText().toString(),
+						riddle2hint.getText().toString(),
+						riddle3hint.getText().toString() 
+					};
+			double[] locations = { lat1,longi1,lat2,longi2,lat3,longi3};
+			CalculateTotalDistance(locations);
+			Toast t = Toast.makeText(getBaseContext(), "distance " + distance , Toast.LENGTH_LONG);
+			t.show();
+			intent.putExtra(RIDDLESANDHINTS, riddleAndHints);
+			intent.putExtra(LOCATION, locations);
+			intent.putExtra(DISTANCE, distance);
+			startService(intent);
+			finish();
+		}
+	}
+
+	@SuppressWarnings("deprecation")
+	private boolean validateFields() {
+        if (!validateRiddles()) {
+        	showDialog(DIALOG_RIDDLE_ERROR);
+        } else if (!validateHints()) {
+            showDialog(DIALOG_HINT_ERROR);
+        } else if (!validateLocations()) {
+            showDialog(DIALOG_LOCATION_ERROR);
+        }else {
+            return true;
+        }
+        return false;
+	}
+
+
+	private boolean validateRiddles() {
+		Log.i("riddle1_text" ,riddle1.getText().toString() );
+		return (riddle1.getText().toString().length()     != 0  && 
+				riddle2.getText().toString().length()     != 0  && 
+				riddle3.getText().toString().length()	  != 0) ;
+	}
+	
+	private boolean validateHints() {
+		return (riddle1hint.getText().toString().length() != 0  &&
+				riddle2hint.getText().toString().length() != 0  &&
+				riddle3hint.getText().toString().length() != 0) ;
+	}
+	
+	private boolean validateLocations() {
+		return (lat1 != 0 && longi1 != 0 && 
+				lat2 != 0 && longi2 != 0 && 
+				lat2 != 0 && longi2 != 0);
+	}
+
+	private void CalculateTotalDistance(double[] locations) {
+		distance = (DistanceBetweenTwo(locations[0],locations[1],locations[2],locations[3]) +
+					DistanceBetweenTwo(locations[2],locations[3],locations[4],locations[5]));
+	}
+
+	private double DistanceBetweenTwo(double aLat1, double aLong1, double aLat2, double aLongi2) {
+	  	double earthRadius = 3958.75;
+	    double dLat = Math.toRadians(aLat2-aLat1);
+	    double dLng = Math.toRadians(aLongi2-aLong1);
+	    double a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+	               Math.cos(Math.toRadians(aLat1)) * Math.cos(Math.toRadians(aLat2)) *
+	               Math.sin(dLng/2) * Math.sin(dLng/2);
+	    double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+	    double dist = earthRadius * c;
+
+	    int meterConversion = 1609;
+	    
+	    return (dist * meterConversion) * 0.00062137119; //returns miles
+		
+	}
+	
+	
+    @SuppressWarnings("deprecation")
+	@Override
+    public Dialog onCreateDialog(int aId) {
+        switch (aId) {
+            case DIALOG_RIDDLE_ERROR:
+                return createTryAgainDialog(R.string.dialog_riddle_error);
+            case DIALOG_HINT_ERROR:
+                return createTryAgainDialog(R.string.dialog_hint_error);
+            case DIALOG_LOCATION_ERROR:
+                return createTryAgainDialog(R.string.dialog_location_error);
+        }
+        return super.onCreateDialog(aId);
+    }
+    
+    private Dialog createTryAgainDialog(int aMessage) {
+        mAlertDialog = new AlertDialog.Builder(this)
+            .setMessage(getString(aMessage))
+            .setNegativeButton("Try Again", null)
+            .setCancelable(true)
+            .create();
+
+        return mAlertDialog;
+    }
+
+	
+}

@@ -1,0 +1,48 @@
+<resources>
+
+    <string name="app_name">Riddler</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_logon">LogonActivity</string>
+    <string name="login">Welcome</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="loginbutton">Login</string>
+    <string name="forgotpasswordbutton">Forgot Password</string>
+    <string name="registerbutton">Register</string>
+    <string name="logo">logo</string>
+    <string name="title_activity_menu">MenuActivity</string>
+    <string name="profilebutton">Profile</string>
+    <string name="rulesbutton">Rules</string>
+    <string name="riddlesbutton">Riddles</string>
+    <string name="title_activity_profile">ProfileActivity</string>
+    <string name="firstname">First Name</string>
+    <string name="userimage">Users Image</string>
+    <string name="title_activity_register">RegisterActivity</string>
+    <string name="register">Registration</string>
+    <string name="emailaddress">Email</string>
+    <string name="confirmpassword">Confrim Password</string>
+    <string name="cancel">Cancel</string>
+    <string name="or">- OR -</string>
+    <string name="facebookconnect">Facebook Connect</string>
+    <string name="profile">Profile</string>
+    <string name="title_activity_create_riddle">CreateRiddleActivity</string>
+    <string name="firstriddle">First Riddle</string>
+    <string name="hint">Hint</string>
+    <string name="location">Pin</string>
+    <string name="secondriddle">Second Riddle</string>
+    <string name="thirdriddle">Third Riddle</string>
+    <string name="createriddlebutton">Create Riddle</string>
+    <string name="done">Done</string>
+    <string name="title_activity_playable_riddles_list">PlayableRiddlesListActivity</string>
+    <string name="title_activity_splash">Splash</string>
+    <string name="title_activity_play">PlayActivity</string>
+    <string name="title_activity_location_selection">LocationSelectionActivity</string>
+    <string name="dialog_riddle_error">Sorry one of your Riddles was blank. Please try again.</string>
+    <string name="dialog_hint_error">Sorry one of your hints are blank. Please try again.</string>
+    <string name="dialog_location_error">Sorry you did not pin one or more of your locations. Please try agian.</string>
+    <string name="skip">Skip</string>
+    <string name="check">Check Answer</string>
+    <string name="longpress">Long Press To Place Pin</string>
+
+</resources>
