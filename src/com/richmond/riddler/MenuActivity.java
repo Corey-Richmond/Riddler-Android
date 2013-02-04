@@ -6,24 +6,22 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.Window;
 import android.widget.Button;
 
 public class MenuActivity extends Activity implements OnClickListener {
 
-	private Button profileButton;
-	private Button createRiddleButton;
-	private Button riddlesButton;
+	private Button profileButton, 
+				   createRiddleButton, 
+				   riddlesButton;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_menu);
         
-        profileButton = (Button) findViewById(R.id.profile);
+        profileButton      = (Button) findViewById(R.id.profile);
         createRiddleButton = (Button) findViewById(R.id.createriddle);
-        riddlesButton = (Button) findViewById(R.id.riddles);
+        riddlesButton      = (Button) findViewById(R.id.riddles);
         
         profileButton.setOnClickListener(this);
         createRiddleButton.setOnClickListener(this);

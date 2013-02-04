@@ -12,6 +12,8 @@ import android.util.Log;
 
 public class RiddlesDataSource {
 
+
+	
 	// Database fields
     private SQLiteDatabase database;
     private MySQLiteHelper dbHelper;
@@ -41,17 +43,17 @@ public class RiddlesDataSource {
 
     public RiddleSequence createRiddleSequence(String[] riddles, double[] locations, double distance) {
         ContentValues values = new ContentValues();
-	    values.put(MySQLiteHelper.COLUMN_RIDDLE_ONE, riddles[0]);
-	    values.put(MySQLiteHelper.COLUMN_RIDDLE_TWO, riddles[1]);
+	    values.put(MySQLiteHelper.COLUMN_RIDDLE_ONE,   riddles[0]);
+	    values.put(MySQLiteHelper.COLUMN_RIDDLE_TWO,   riddles[1]);
 	    values.put(MySQLiteHelper.COLUMN_RIDDLE_THREE, riddles[2]);
-	    values.put(MySQLiteHelper.COLUMN_RIDDLE_ONE_HINT, riddles[3]);
-	    values.put(MySQLiteHelper.COLUMN_RIDDLE_TWO_HINT, riddles[4]);
+	    values.put(MySQLiteHelper.COLUMN_RIDDLE_ONE_HINT,   riddles[3]);
+	    values.put(MySQLiteHelper.COLUMN_RIDDLE_TWO_HINT,   riddles[4]);
 	    values.put(MySQLiteHelper.COLUMN_RIDDLE_THREE_HINT, riddles[5]);
 	    
 	    
-	    values.put(MySQLiteHelper.COLUMN_RIDDLE_ONE_LOCATION, locations[1]+","+locations[0]);
-	    values.put(MySQLiteHelper.COLUMN_RIDDLE_TWO_LOCATION, locations[3]+","+locations[2]);
-	    values.put(MySQLiteHelper.COLUMN_RIDDLE_THREE_LOCATION, locations[5]+","+locations[4]);
+	    values.put(MySQLiteHelper.COLUMN_RIDDLE_ONE_LOCATION, locations[1]   + "," +locations[0]);
+	    values.put(MySQLiteHelper.COLUMN_RIDDLE_TWO_LOCATION, locations[3]   + "," +locations[2]);
+	    values.put(MySQLiteHelper.COLUMN_RIDDLE_THREE_LOCATION, locations[5] + "," +locations[4]);
 	    
 	    values.put(MySQLiteHelper.COLUMN_DISTANCE, distance);
 	    
@@ -89,6 +91,7 @@ public class RiddlesDataSource {
     cursor.close();
     return riddleSequences;
   }
+    
   
   public RiddleSequence getRiddles(long ID) {
 
@@ -125,4 +128,7 @@ public class RiddlesDataSource {
 	riddleSequence.setDistance(cursor.getString(10));
     return riddleSequence;
   }
+  
+
+  
 } 

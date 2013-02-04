@@ -28,15 +28,15 @@ import com.google.android.maps.OverlayItem;
 
 public class LocationSelectionActivity extends MapActivity implements OnClickListener {
 
-	MapController mControl;
-	GeoPoint GeoP;
-	MapView mapView;
-	int x, y;
-	GeoPoint touchedPoint;
-	Drawable drawPin;
-	List<Overlay> overlayList;
-	double longitude=0, latitude=0;
-	Button mapDone; 
+	private int x, y;
+	private GeoPoint GeoP;
+	private Button mapDoneButton; 
+	private MapView mapView;
+	private Drawable drawPin;
+	private GeoPoint touchedPoint;
+	private MapController mControl;
+	private List<Overlay> overlayList;
+	private double longitude=0, latitude=0;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -44,12 +44,11 @@ public class LocationSelectionActivity extends MapActivity implements OnClickLis
 	    
 	    setContentView(R.layout.activity_location_selection);
 	    
-        mapDone = (Button) findViewById(R.id.mapDone);
+	    mapView       = (MapView) findViewById(R.id.mapview);	    
+        mapDoneButton = (Button)  findViewById(R.id.mapDone);
 
-        mapDone.setOnClickListener(this);
+        mapDoneButton.setOnClickListener(this);
 	    
-	    mapView = (MapView) findViewById(R.id.mapview);
-	    mapView.setBuiltInZoomControls(true);
 	    mapView.setBuiltInZoomControls(true);
 	    
 	    double lat = 41.8767689;
@@ -68,21 +67,7 @@ public class LocationSelectionActivity extends MapActivity implements OnClickLis
 	    drawPin = this.getResources().getDrawable(R.drawable.pin);
 
 	}
-//	
-//	@Override
-//	public void onSaveInstanceState(Bundle savedInstanceState) {
-//	  super.onSaveInstanceState(savedInstanceState);
-//	  // Save UI state changes to the savedInstanceState.
-//	  // This bundle will be passed to onCreate if the process is
-//	  // killed and restarted.
-//	  savedInstanceState.putParcelable(key, value)(key, value)("overlayList", overlayList);
-//	  savedInstanceState.putDouble("myDouble", 1.9);
-//	  savedInstanceState.putInt("MyInt", 1);
-//	  savedInstanceState.putString("MyString", "Welcome back to Android");
-//	  // etc.
-//	}
-	
-	
+
 	
 	@Override
 	protected boolean isRouteDisplayed() {
@@ -91,8 +76,7 @@ public class LocationSelectionActivity extends MapActivity implements OnClickLis
 
 	public class MapOverlay extends Overlay {
 		
-		@SuppressWarnings("deprecation")
-		final GestureDetector gestureDetector = new GestureDetector(new GestureDetector.SimpleOnGestureListener() {
+		final GestureDetector gestureDetector = new GestureDetector(getBaseContext(), new GestureDetector.SimpleOnGestureListener() {
 		    public void onLongPress(MotionEvent e) {
 		        Log.e("", "Longpress detected");
 		        x = (int) e.getX();
@@ -102,48 +86,43 @@ public class LocationSelectionActivity extends MapActivity implements OnClickLis
 		        AlertDialog alert = new AlertDialog.Builder(LocationSelectionActivity.this).create();
 				alert.setTitle("Pin");
 				alert.setMessage("Do you want to pin this as this riddles location?");
-				alert.setButton("Place pin", new DialogInterface.OnClickListener() {
+				alert.setButton(DialogInterface.BUTTON_POSITIVE, "Place pin", new DialogInterface.OnClickListener() {
 					
 					public void onClick(DialogInterface dialog, int which) {
-						// TODO Auto-generated method stub
 						OverlayItem overlayItem = new OverlayItem(touchedPoint, "Location", getPinInfo());
 						CustomPinpoint custom = new CustomPinpoint(drawPin, LocationSelectionActivity.this);
 						custom.insertPinpoint(overlayItem);
+						
 						if(overlayList.size() == 2){
 							overlayList.remove(1);
 						}
-						//overlayList.removeAll(CustomPinpoint);
+						
 						overlayList.add(custom);
 						mapView.invalidate();
-						
 					}
 				});
 
-				alert.setButton2("Toggle View", new DialogInterface.OnClickListener() {
+				alert.setButton(DialogInterface.BUTTON_NEUTRAL,"Toggle View", new DialogInterface.OnClickListener() {
 					
 					public void onClick(DialogInterface dialog, int which) {
 						
 						if (mapView.isSatellite()){
 							mapView.setSatellite(false);
-							mapView.setStreetView(true);
+							//mapView.setStreetView(true);
 						}
 						else{
-							mapView.setStreetView(false);
+							//mapView.setStreetView(false);
 							mapView.setSatellite(true);
 						}
 						
 					}
 				});
 				
-				alert.setButton3("Cancel", new DialogInterface.OnClickListener() {
-					
+				alert.setButton(DialogInterface.BUTTON_NEGATIVE,"Cancel", new DialogInterface.OnClickListener() {					
 					public void onClick(DialogInterface dialog, int which) {
-						// TODO Auto-generated method stub
-						
 					}
 				});
 				alert.show();
-				
 		    }
 		});
 

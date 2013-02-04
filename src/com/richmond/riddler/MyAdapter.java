@@ -23,12 +23,15 @@ public class MyAdapter extends ArrayAdapter<RiddleSequence> {
     Context context; 
     int layoutResourceId;    
     List<RiddleSequence> data = null;
+    
+
 
     public MyAdapter(Context context, int layoutResourceId, List<RiddleSequence> data) {
         super(context, layoutResourceId, data);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
         this.data = data;
+
     }
 
     @Override
@@ -46,9 +49,9 @@ public class MyAdapter extends ArrayAdapter<RiddleSequence> {
             row = inflater.inflate(layoutResourceId, parent, false);
             
             holder = new RiddleHolder();
-            holder.imgIcon = (ImageView)row.findViewById(R.id.imgIcon);
+            holder.imgIcon  = (ImageView)row.findViewById(R.id.imgIcon);
             holder.txtTitle = (TextView)row.findViewById(R.id.txtTitle);
-            holder.count = (TextView)row.findViewById(R.id.count);
+            holder.count    = (TextView)row.findViewById(R.id.count);
             
             row.setTag(holder);
             Log.i("ROW_NUMBER", rowNumber+"");
@@ -93,6 +96,8 @@ public class MyAdapter extends ArrayAdapter<RiddleSequence> {
         ImageView imgIcon;
         TextView txtTitle;
     }
+    
+
 }
 
 

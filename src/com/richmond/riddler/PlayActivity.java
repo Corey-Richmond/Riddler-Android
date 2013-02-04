@@ -13,14 +13,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class PlayActivity extends Activity implements OnClickListener {
-
-	GPSTracker gps;
-	long riddleID;
-	int currentRiddle = 1;
-	RiddleSequence riddles;
-	boolean hintIsShowing = false, skipWasUsed = false;
+	
+	private long riddleID;
+	private GPSTracker gps;
+	private int currentRiddle = 1;
+	private RiddleSequence riddles;
 	private Button hintButton, checkButton, skipButton;
-	TextView textViewRiddle, textViewHint, textViewTitle;
+	private boolean hintIsShowing = false, skipWasUsed = false;
+	private TextView textViewRiddle, textViewHint, textViewTitle;
 	private RiddlesDataSource database = new RiddlesDataSource(this);
 
 	@Override
@@ -57,9 +57,7 @@ public class PlayActivity extends Activity implements OnClickListener {
 	@Override
 	public void onSaveInstanceState(Bundle savedInstanceState) {
 	  super.onSaveInstanceState(savedInstanceState);
-	  // Save UI state changes to the savedInstanceState.
-	  // This bundle will be passed to onCreate if the process is
-	  // killed and restarted.
+
 	  savedInstanceState.putBoolean("Hint_Shows", hintIsShowing);
 	  
 	}
@@ -67,8 +65,7 @@ public class PlayActivity extends Activity implements OnClickListener {
 	@Override
 	public void onRestoreInstanceState(Bundle savedInstanceState) {
 	  super.onRestoreInstanceState(savedInstanceState);
-	  // Restore UI state from the savedInstanceState.
-	  // This bundle has also been passed to onCreate.
+
 	  hintIsShowing = savedInstanceState.getBoolean("Hint_Shows");
 	  if(hintIsShowing)
 		  hint();

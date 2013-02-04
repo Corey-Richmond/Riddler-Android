@@ -1,19 +1,22 @@
 package com.richmond.riddler;
 
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class PlayableRiddlesListActivity extends Activity implements OnItemClickListener {
+public class PlayableRiddlesListActivity extends Activity{ 
     private RiddlesDataSource datasource;
     private ListView mList;
     MyAdapter adapter; 
+	GPSTracker gps;
+	double latitude, longitude;
+	List<RiddleSequence> values;
+	List<RiddleSequence> valuesSorted = new LinkedList<RiddleSequence>();
     @Override
     public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -22,52 +25,68 @@ public class PlayableRiddlesListActivity extends Activity implements OnItemClick
 		datasource = new RiddlesDataSource(this);
 		datasource.open();
 		
-		List<RiddleSequence> values = datasource.getAllRiddles();
+		values = datasource.getAllRiddles();		
+		addDistancetoValues();
+		sortValues();
 		
-		adapter = new MyAdapter(this, R.layout.listview_item_row, values); 
+		adapter = new MyAdapter(this, R.layout.listview_item_row, valuesSorted); 
 		
 		mList = (ListView)findViewById(R.id.listView1);
 		
-		//	    View header = (View)getLayoutInflater().inflate(R.layout.listview_header_row, null);
-		//	    mList.addHeaderView(header);
-		
 		mList.setAdapter(adapter);
-
 	}
 
-	  // Will be called via the onClick attribute
-	  // of the buttons in main.xml
-//	  public void onClick(View view) {
-//	    @SuppressWarnings("unchecked")
-//	   
-//	    RiddleSequence riddleSequence = null;
-//	    switch (view.getId()) {
-//	    case R.id.add:
-//	    	Intent intent = new Intent(this, MainActivity.class);
-//	    	startActivity(intent);
-//	      break;
-//	    case R.id.delete:
-//	    	EditText editText = (EditText) findViewById(R.id.deleteNumber);
-//	    	String myEditValue = editText.getText().toString();
-//	    	int position = Integer.parseInt(myEditValue);
-//	    	if (myEditValue != ""){
-//	    		if (adapter.getCount() >= (position-1)) {
-//	    			comment = (Comment) adapter.getItem(position-1);
-//	    			datasource.deleteComment(comment);
-//	    	        adapter.remove(comment);
-//	    		}
-//	    	}
-////	      if (adapter.getCount() > 0) {
-////	        comment = (Comment) adapter.getItem(0);
-////	        datasource.deleteComment(comment);
-////	        adapter.remove(comment);
-////	      }
-//	      break;
-//	    }
-//	    adapter.notifyDataSetChanged();
-//	  }
 
-	  @Override
+
+	private void sortValues() {	
+    	while(!values.isEmpty()){   
+    		RiddleSequence temp = findMin();
+    		valuesSorted.add(temp);
+    		remove(temp);
+    	}		
+	}
+
+	private RiddleSequence findMin() {
+        Iterator<RiddleSequence> iter = values.iterator();
+       	if (values.isEmpty())  
+       		return null;
+       	RiddleSequence min = values.get(0);  
+    	while(iter.hasNext()){  
+    		RiddleSequence temp = iter.next();  
+    		if( Double.valueOf(temp.getDistance()) < Double.valueOf(min.getDistance())){  
+    			min=temp;   
+    		}
+    	}
+		return min;
+    }
+	
+    public boolean remove(RiddleSequence o) {
+    	int index = values.indexOf(o);
+    	
+    	if (index == -1)
+		return false;
+    	
+    	values.remove(index);
+    	return true;
+    }
+
+
+	private void addDistancetoValues() {
+		getLocation();
+		double additionalDistance, totalDistance;
+		
+	        for(int i=0; i < values.size(); i++){
+	        	 additionalDistance = DistanceBetweenTwo(Double.valueOf(values.get(i).getRiddleonelocation().split(",")[0]), 
+     				   Double.valueOf(values.get(i).getRiddleonelocation().split(",")[1]), 
+     				   latitude, longitude);
+	        	totalDistance = (Double.valueOf(values.get(i).getDistance()) + additionalDistance);
+	        	values.get(i).setDistance(String.valueOf(totalDistance));
+	        }
+	}
+
+
+
+	@Override
 	  protected void onResume() {
 	    datasource.open();
 	    super.onResume();
@@ -79,28 +98,46 @@ public class PlayableRiddlesListActivity extends Activity implements OnItemClick
 	    super.onPause();
 	  }
 
-//	  @Override
-//	  public boolean onOptionsItemSelected(MenuItem item) {
-//	      switch (item.getItemId()) {
-//	          case android.R.id.home:
-//	              // app icon in action bar clicked; go home
-//	              Intent intent = new Intent(this, MainActivity.class);
-//	              intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//	              startActivity(intent);
-//	              return true;
-//	          default:
-//	              return super.onOptionsItemSelected(item);
-//	      }
-//	  }
 
-	public void onClick(View v) {
-		Toast.makeText(this, "clicked",Toast.LENGTH_LONG).show();
-	}
+	    
+	    private void getLocation() {
+	  		// create class object
+	  		gps = new GPSTracker(this);
 
-	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		// TODO Auto-generated method stub
-		
-	}
+	  		// check if GPS enabled
+	  		if (gps.canGetLocation()) {
+
+	  			latitude = gps.getLatitude();
+	  			longitude = gps.getLongitude();
+
+	  			// \n is for new line
+	  			Toast.makeText(getBaseContext(),
+	  					"Your Location is - \nLat: "   +latitude + 
+	  										"\nLong: " + longitude, 
+	  					Toast.LENGTH_LONG).show();
+	  			
+	  			gps.stopUsingGPS();
+	  		} else {
+	  			gps.showSettingsAlert();
+	  		}
+
+	    }
+	    
+	    private double DistanceBetweenTwo(double aLat1, double aLong1, double aLat2, double aLongi2) {
+	  	  	double earthRadius = 3958.75;
+	  	    double dLat = Math.toRadians(aLat2-aLat1);
+	  	    double dLng = Math.toRadians(aLongi2-aLong1);
+	  	    double a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+	  	               Math.cos(Math.toRadians(aLat1)) * Math.cos(Math.toRadians(aLat2)) *
+	  	               Math.sin(dLng/2) * Math.sin(dLng/2);
+	  	    double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+	  	    double dist = earthRadius * c;
+
+	  	    int meterConversion = 1609;
+	  	    
+	  	    return (dist * meterConversion) * 0.00062137119; //returns miles
+	  		
+	    }
 
 }
 
