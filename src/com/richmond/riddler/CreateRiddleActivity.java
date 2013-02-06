@@ -16,9 +16,10 @@ public class CreateRiddleActivity extends Activity implements OnClickListener {
 	
     private AlertDialog mAlertDialog;
     public static final int DIALOG_CREATE_RIDDLE_FAILURE  	= 1;
-    public static final int DIALOG_RIDDLE_ERROR    			= 2;
-    public static final int DIALOG_HINT_ERROR     		 	= 3;
-    public static final int DIALOG_LOCATION_ERROR      		= 4;
+    public static final int DIALOG_TITLE_ERROR  	        = 2;
+    public static final int DIALOG_RIDDLE_ERROR    			= 3;
+    public static final int DIALOG_HINT_ERROR     		 	= 4;
+    public static final int DIALOG_LOCATION_ERROR      		= 5;
     
 	public final static String RIDDLESANDHINTS 	= "com.richmond.riddler.MESSAGE";
 	public final static String DISTANCE 		= "com.richmond.riddler.DISTANCE";
@@ -26,7 +27,7 @@ public class CreateRiddleActivity extends Activity implements OnClickListener {
 
 	
 	private Button    doneButton, pinRiddleOne, pinRiddleTwo, pinRiddleThree;
-	private EditText  riddle1, riddle2, riddle3, 
+	private EditText  riddle1, riddle2, riddle3, riddleTitle, 
 					  riddle1hint, riddle2hint, riddle3hint;
 	private double    lat1, longi1, lat2, longi2, lat3, longi3 ,
 					  distance; 
@@ -48,6 +49,7 @@ public class CreateRiddleActivity extends Activity implements OnClickListener {
 		riddle1hint = (EditText) findViewById(R.id.riddle1hint);
 		riddle2hint = (EditText) findViewById(R.id.riddle2hint);
 		riddle3hint = (EditText) findViewById(R.id.riddle3hint);
+		riddleTitle = (EditText) findViewById(R.id.riddletitle);
 		
 		doneButton.setOnClickListener(this);
 		pinRiddleOne.setOnClickListener(this);
@@ -123,7 +125,8 @@ public class CreateRiddleActivity extends Activity implements OnClickListener {
 						riddle3.getText().toString(),
 						riddle1hint.getText().toString(),
 						riddle2hint.getText().toString(),
-						riddle3hint.getText().toString() 
+						riddle3hint.getText().toString(),
+						riddleTitle.getText().toString()
 					};
 			
 			double[] locations = { lat1,longi1,lat2,longi2,lat3,longi3};
@@ -143,7 +146,9 @@ public class CreateRiddleActivity extends Activity implements OnClickListener {
 
 	@SuppressWarnings("deprecation")
 	private boolean validateFields() {
-        if (!validateRiddles()) {
+        if (!validateTitle()) {
+        	showDialog(DIALOG_TITLE_ERROR);
+        } else if (!validateRiddles()) {
         	showDialog(DIALOG_RIDDLE_ERROR);
         } else if (!validateHints()) {
             showDialog(DIALOG_HINT_ERROR);
@@ -156,11 +161,14 @@ public class CreateRiddleActivity extends Activity implements OnClickListener {
 	}
 
 
+	private boolean validateTitle() {
+		return (riddleTitle.getText().toString().length()  != 0) ;
+	}
 	private boolean validateRiddles() {
 		Log.i("riddle1_text" ,riddle1.getText().toString() );
-		return (riddle1.getText().toString().length()     != 0  && 
-				riddle2.getText().toString().length()     != 0  && 
-				riddle3.getText().toString().length()	  != 0) ;
+		return (riddle1.getText().toString().length()  != 0  && 
+				riddle2.getText().toString().length()  != 0  && 
+				riddle3.getText().toString().length()  != 0) ;
 	}
 	
 	private boolean validateHints() {
@@ -201,6 +209,8 @@ public class CreateRiddleActivity extends Activity implements OnClickListener {
 	@Override
     public Dialog onCreateDialog(int aId) {
         switch (aId) {
+        	case DIALOG_TITLE_ERROR:
+        		return createTryAgainDialog(R.string.dialog_title_error);
             case DIALOG_RIDDLE_ERROR:
                 return createTryAgainDialog(R.string.dialog_riddle_error);
             case DIALOG_HINT_ERROR:

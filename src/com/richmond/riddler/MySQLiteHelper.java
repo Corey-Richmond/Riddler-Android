@@ -8,6 +8,7 @@ import android.util.Log;
 public class MySQLiteHelper extends SQLiteOpenHelper {
 	  public static final String TABLE_RIDDLES = "riddles";
 	  public static final String COLUMN_ID = "_id";
+	  public static final String COLUMN_RIDDLE_TITLE = "riddletitle";
 	  public static final String COLUMN_RIDDLE_ONE   = "riddleone";
 	  public static final String COLUMN_RIDDLE_TWO   = "riddletwo";
 	  public static final String COLUMN_RIDDLE_THREE = "riddlethree";	  
@@ -26,6 +27,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 	  private static final String DATABASE_CREATE = "create table "
 	      + TABLE_RIDDLES + "("
 	      + COLUMN_ID + " integer primary key autoincrement, " 
+	      + COLUMN_RIDDLE_TITLE + " text not null, "
 	      + COLUMN_RIDDLE_ONE   + " text not null, " 
 	      + COLUMN_RIDDLE_TWO   + " text not null, " 
 	      + COLUMN_RIDDLE_THREE + " text not null, " 

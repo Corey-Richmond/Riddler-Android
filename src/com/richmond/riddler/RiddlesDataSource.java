@@ -18,6 +18,7 @@ public class RiddlesDataSource {
     private SQLiteDatabase database;
     private MySQLiteHelper dbHelper;
     private String[] allColumns = { MySQLiteHelper.COLUMN_ID,
+    	MySQLiteHelper.COLUMN_RIDDLE_TITLE,
         MySQLiteHelper.COLUMN_RIDDLE_ONE, 
         MySQLiteHelper.COLUMN_RIDDLE_TWO, 
         MySQLiteHelper.COLUMN_RIDDLE_THREE, 
@@ -49,6 +50,7 @@ public class RiddlesDataSource {
 	    values.put(MySQLiteHelper.COLUMN_RIDDLE_ONE_HINT,   riddles[3]);
 	    values.put(MySQLiteHelper.COLUMN_RIDDLE_TWO_HINT,   riddles[4]);
 	    values.put(MySQLiteHelper.COLUMN_RIDDLE_THREE_HINT, riddles[5]);
+	    values.put(MySQLiteHelper.COLUMN_RIDDLE_TITLE, riddles[6]);
 	    
 	    
 	    values.put(MySQLiteHelper.COLUMN_RIDDLE_ONE_LOCATION, locations[1]   + "," +locations[0]);
@@ -116,16 +118,17 @@ public class RiddlesDataSource {
   private RiddleSequence cursorToRiddleSequence(Cursor cursor) {
 	RiddleSequence riddleSequence = new RiddleSequence();
 	riddleSequence.setId(cursor.getLong(0));
-	riddleSequence.setRiddleone(cursor.getString(1));
-	riddleSequence.setRiddletwo(cursor.getString(2));
-	riddleSequence.setRiddlethree(cursor.getString(3));
-	riddleSequence.setRiddleonehint(cursor.getString(4));
-	riddleSequence.setRiddletwohint(cursor.getString(5));
-	riddleSequence.setRiddlethreehint(cursor.getString(6));
-	riddleSequence.setRiddleonelocation(cursor.getString(7));
-	riddleSequence.setRiddletwolocation(cursor.getString(8));
-	riddleSequence.setRiddlethreelocation(cursor.getString(9));
-	riddleSequence.setDistance(cursor.getString(10));
+	riddleSequence.setRiddletitle(cursor.getString(1));
+	riddleSequence.setRiddleone(cursor.getString(2));
+	riddleSequence.setRiddletwo(cursor.getString(3));
+	riddleSequence.setRiddlethree(cursor.getString(4));
+	riddleSequence.setRiddleonehint(cursor.getString(5));
+	riddleSequence.setRiddletwohint(cursor.getString(6));
+	riddleSequence.setRiddlethreehint(cursor.getString(7));
+	riddleSequence.setRiddleonelocation(cursor.getString(8));
+	riddleSequence.setRiddletwolocation(cursor.getString(9));
+	riddleSequence.setRiddlethreelocation(cursor.getString(10));
+	riddleSequence.setDistance(cursor.getString(11));
     return riddleSequence;
   }
   

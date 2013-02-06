@@ -3,6 +3,7 @@ package com.richmond.riddler;
 public class RiddleSequence {
 	
 	private long id;
+	private String riddletitle;
 	private String riddleone;
 	private String riddletwo;
 	private String riddlethree;	  
@@ -19,6 +20,12 @@ public class RiddleSequence {
 	}
 	public void setId(long id) {
 		this.id = id;
+	}
+	public String getRiddletitle() {
+		return riddletitle;
+	}
+	public void setRiddletitle(String riddletitle) {
+		this.riddletitle = riddletitle;
 	}
 	public String getRiddleone() {
 		return riddleone;
@@ -80,17 +87,20 @@ public class RiddleSequence {
 	public void setDistance(String distance) {
 		this.distance = distance;
 	}
+	
 	@Override
 	public String toString() {
-		return "RiddleSequence [id=" + id + ", riddleone=" + riddleone
-				+ ", riddletwo=" + riddletwo + ", riddlethree=" + riddlethree
-				+ ", riddleonehint=" + riddleonehint + ", riddletwohint="
-				+ riddletwohint + ", riddlethreehint=" + riddlethreehint
+		return "RiddleSequence [id=" + id + ", riddletitle=" + riddletitle
+				+ ", riddleone=" + riddleone + ", riddletwo=" + riddletwo
+				+ ", riddlethree=" + riddlethree + ", riddleonehint="
+				+ riddleonehint + ", riddletwohint=" + riddletwohint
+				+ ", riddlethreehint=" + riddlethreehint
 				+ ", riddleonelocation=" + riddleonelocation
 				+ ", riddletwolocation=" + riddletwolocation
 				+ ", riddlethreelocation=" + riddlethreelocation
 				+ ", distance=" + distance + "]";
-	} 
+	}
+	
 
 	
 } 

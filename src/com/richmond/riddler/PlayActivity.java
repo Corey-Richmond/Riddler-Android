@@ -29,10 +29,10 @@ public class PlayActivity extends Activity implements OnClickListener {
 		setContentView(R.layout.activity_play);
 
 		Intent intent = getIntent();
-		riddleID = intent.getLongExtra(MyAdapter.RIDDLES_ID, -1);
+		riddleID      = intent.getLongExtra(MyAdapter.RIDDLES_ID, -1);
 		currentRiddle = intent.getIntExtra(MyAdapter.CURRENT_RIDDLE, -1);
-		skipWasUsed = intent.getBooleanExtra(MyAdapter.SKIP_USED, false);
-		
+		skipWasUsed   = intent.getBooleanExtra(MyAdapter.SKIP_USED, false);
+				
 		database.open();
 		riddles = database.getRiddles(riddleID);
 
@@ -125,7 +125,12 @@ public class PlayActivity extends Activity implements OnClickListener {
 			
 																																		//Tolerance
 			if (DistanceBetweenTwo(latitude, longitude, Double.valueOf(riddlelocationstring[0]), Double.valueOf(riddlelocationstring[1])) < .09) {
-				AlertUserOfNextChallenge();
+				if(currentRiddle == 3){
+					AlertUserOfFinishedSequence();
+				}
+				else{
+					AlertUserOfNextChallenge();
+				}
 			}
 			gps.stopUsingGPS();
 		} else {
@@ -149,6 +154,29 @@ public class PlayActivity extends Activity implements OnClickListener {
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
 						nextRiddle();
+						dialog.cancel();
+					}
+				});
+
+		// Showing Alert Message
+		alertDialog.show();
+
+	}
+	
+	private void AlertUserOfFinishedSequence() {
+		AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+
+		// Setting Dialog Title
+		alertDialog.setTitle("Congratulations");
+
+		// Setting Dialog Message
+		alertDialog.setMessage("You Solved All The Riddles In The Sequence");
+
+		// on pressing cancel button
+		alertDialog.setNegativeButton("COOL",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						finish();
 						dialog.cancel();
 					}
 				});

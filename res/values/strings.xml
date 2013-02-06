@@ -44,5 +44,8 @@
     <string name="skip">Skip</string>
     <string name="check">Check Answer</string>
     <string name="longpress">Long Press To Place Pin</string>
+    <string name="lastname">Last Name</string>
+    <string name="riddletitle">Riddle Title</string>
+    <string name="dialog_title_error">Sorry you need a title for the riddle sequence. Please try again.</string>
 
 </resources>

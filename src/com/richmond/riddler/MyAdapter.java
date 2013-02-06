@@ -76,7 +76,7 @@ public class MyAdapter extends ArrayAdapter<RiddleSequence> {
         }
         RiddleSequence riddles = data.get(position);
         holder.count.setText((position+1)+"");
-        holder.txtTitle.setText(riddles.getRiddleone());
+        holder.txtTitle.setText(riddles.getRiddletitle());
 
         
         
