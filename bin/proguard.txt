@@ -1,0 +1,33 @@
+# view res/layout/activity_location_selection.xml #generated:7
+-keep class com.google.android.maps.MapView { <init>(...); }
+
+# view AndroidManifest.xml #generated:40
+-keep class com.richmond.riddler.AddRiddleService { <init>(...); }
+
+# view AndroidManifest.xml #generated:35
+-keep class com.richmond.riddler.CreateRiddleActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:60
+-keep class com.richmond.riddler.LocationSelectionActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:19
+-keep class com.richmond.riddler.LogonActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:23
+-keep class com.richmond.riddler.MenuActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:56
+-keep class com.richmond.riddler.PlayActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:43
+-keep class com.richmond.riddler.PlayableRiddlesListActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:27
+-keep class com.richmond.riddler.ProfileActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:31
+-keep class com.richmond.riddler.RegisterActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:47
+-keep class com.richmond.riddler.Splash { <init>(...); }
+
