@@ -34,24 +34,11 @@
         	android:layout_width="250dp"
         	android:layout_height="wrap_content"
        	/>
-    	
-        <EditText
-            android:id="@+id/username"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"            
-            android:hint="@string/username"
-            android:textColorHint="@color/black"
-            android:inputType="textNoSuggestions" 
-       	/>
-        
-        <EditText
-            android:id="@+id/password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/password"
-            android:textColorHint="@color/black"      
-            android:inputType="textPassword"
-        />
+
+    	<Spinner
+    	    android:id="@+id/spinner1"
+    	    android:layout_width="match_parent"
+    	    android:layout_height="58dp" />
         
         <Button 
             android:id="@+id/login"
@@ -66,24 +53,7 @@
             android:layout_gravity="center"
             android:orientation="horizontal"
             android:weightSum="1"  
-        >
-
-        	<Button
-	            android:id="@+id/register"
-	            android:layout_width="0dp"
-	            android:layout_height="fill_parent"
-	            android:layout_weight=".5"
-	            android:textSize="10dp"
-	            android:text="@string/registerbutton"
-            />
-        	<Button 
-	            android:id="@+id/forgotpassword"
-	            android:layout_width="0dp"
-	            android:layout_height="fill_parent"
-	            android:layout_weight=".5"
-	            android:textSize="10dp"
-	            android:text="@string/forgotpasswordbutton"
-            />    
+        >    
 
         	
         </LinearLayout>
