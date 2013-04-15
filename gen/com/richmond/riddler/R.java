@@ -9,14 +9,132 @@ package com.richmond.riddler;
 
 public final class R {
     public static final class attr {
+        /** <p>Must be a floating point value, such as "<code>1.2</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int cameraBearing=0x7f010001;
+        /** <p>Must be a floating point value, such as "<code>1.2</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int cameraTargetLat=0x7f010002;
+        /** <p>Must be a floating point value, such as "<code>1.2</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int cameraTargetLng=0x7f010003;
+        /** <p>Must be a floating point value, such as "<code>1.2</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int cameraTilt=0x7f010004;
+        /** <p>Must be a floating point value, such as "<code>1.2</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int cameraZoom=0x7f010005;
+        /** <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>none</code></td><td>0</td><td></td></tr>
+<tr><td><code>normal</code></td><td>1</td><td></td></tr>
+<tr><td><code>satellite</code></td><td>2</td><td></td></tr>
+<tr><td><code>terrain</code></td><td>3</td><td></td></tr>
+<tr><td><code>hybrid</code></td><td>4</td><td></td></tr>
+</table>
+         */
+        public static final int mapType=0x7f010000;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int uiCompass=0x7f010006;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int uiRotateGestures=0x7f010007;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int uiScrollGestures=0x7f010008;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int uiTiltGestures=0x7f010009;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int uiZoomControls=0x7f01000a;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int uiZoomGestures=0x7f01000b;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int useViewLifecycle=0x7f01000c;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int zOrderOnTop=0x7f01000d;
     }
     public static final class color {
-        public static final int black=0x7f040000;
-        public static final int blue=0x7f040005;
-        public static final int green=0x7f040004;
-        public static final int lightgrey=0x7f040001;
-        public static final int red=0x7f040003;
-        public static final int white=0x7f040002;
+        public static final int black=0x7f060000;
+        public static final int blue=0x7f060005;
+        public static final int green=0x7f060004;
+        public static final int lightgrey=0x7f060001;
+        public static final int red=0x7f060003;
+        public static final int white=0x7f060002;
     }
     public static final class drawable {
         public static final int background=0x7f020000;
@@ -27,58 +145,63 @@ public final class R {
         public static final int pin=0x7f020005;
     }
     public static final class id {
-        public static final int cancel=0x7f08002e;
-        public static final int checkButton=0x7f080021;
-        public static final int confirmpassword=0x7f08002c;
-        public static final int confirmregistration=0x7f08002d;
-        public static final int count=0x7f08002f;
-        public static final int createriddle=0x7f080019;
-        public static final int donebutton=0x7f08000e;
-        public static final int emailaddress=0x7f08002b;
-        public static final int facebookconnece=0x7f080017;
-        public static final int firstname=0x7f080026;
-        public static final int forgotpassword=0x7f080016;
-        public static final int hintButton=0x7f08001f;
-        public static final int imgIcon=0x7f080030;
-        public static final int lastname=0x7f080027;
-        public static final int listView1=0x7f080024;
-        public static final int listViewHeader=0x7f080022;
-        public static final int login=0x7f080014;
-        public static final int logo=0x7f080011;
-        public static final int mapDone=0x7f080010;
-        public static final int mapview=0x7f08000f;
-        public static final int medalsline=0x7f08002a;
-        public static final int menu_settings=0x7f080033;
-        public static final int numofpoints=0x7f080029;
-        public static final int password=0x7f080013;
-        public static final int pinfirstriddle=0x7f080005;
-        public static final int pinsecondriddle=0x7f080009;
-        public static final int pinthirdriddle=0x7f08000d;
-        public static final int pointline=0x7f080028;
-        public static final int profile=0x7f08001b;
-        public static final int profile_picture=0x7f080025;
-        public static final int register=0x7f080015;
-        public static final int riddle1=0x7f080003;
-        public static final int riddle1hint=0x7f080004;
-        public static final int riddle2=0x7f080007;
-        public static final int riddle2hint=0x7f080008;
-        public static final int riddle3=0x7f08000b;
-        public static final int riddle3hint=0x7f08000c;
-        public static final int riddleHintTextView=0x7f08001e;
-        public static final int riddleTextView=0x7f08001d;
-        public static final int riddleTitle=0x7f08001c;
-        public static final int riddles=0x7f080018;
-        public static final int riddletitle=0x7f080001;
-        public static final int rules=0x7f08001a;
-        public static final int skipButton=0x7f080020;
-        public static final int splashscreen=0x7f080032;
-        public static final int textView0=0x7f080000;
-        public static final int textView1=0x7f080002;
-        public static final int textView2=0x7f080006;
-        public static final int textView3=0x7f08000a;
-        public static final int txtHeader=0x7f080023;
-        public static final int txtTitle=0x7f080031;
-        public static final int username=0x7f080012;
+        public static final int cancel=0x7f040033;
+        public static final int checkButton=0x7f040026;
+        public static final int confirmpassword=0x7f040031;
+        public static final int confirmregistration=0x7f040032;
+        public static final int count=0x7f040034;
+        public static final int createriddle=0x7f04001e;
+        public static final int donebutton=0x7f040013;
+        public static final int emailaddress=0x7f040030;
+        public static final int facebookconnece=0x7f04001c;
+        public static final int firstname=0x7f04002b;
+        public static final int forgotpassword=0x7f04001b;
+        public static final int hintButton=0x7f040024;
+        public static final int hybrid=0x7f040004;
+        public static final int imgIcon=0x7f040035;
+        public static final int lastname=0x7f04002c;
+        public static final int listView1=0x7f040029;
+        public static final int listViewHeader=0x7f040027;
+        public static final int login=0x7f040019;
+        public static final int logo=0x7f040016;
+        public static final int mapDone=0x7f040015;
+        public static final int mapview=0x7f040014;
+        public static final int medalsline=0x7f04002f;
+        public static final int menu_settings=0x7f040038;
+        public static final int none=0x7f040000;
+        public static final int normal=0x7f040001;
+        public static final int numofpoints=0x7f04002e;
+        public static final int password=0x7f040018;
+        public static final int pinfirstriddle=0x7f04000a;
+        public static final int pinsecondriddle=0x7f04000e;
+        public static final int pinthirdriddle=0x7f040012;
+        public static final int pointline=0x7f04002d;
+        public static final int profile=0x7f040020;
+        public static final int profile_picture=0x7f04002a;
+        public static final int register=0x7f04001a;
+        public static final int riddle1=0x7f040008;
+        public static final int riddle1hint=0x7f040009;
+        public static final int riddle2=0x7f04000c;
+        public static final int riddle2hint=0x7f04000d;
+        public static final int riddle3=0x7f040010;
+        public static final int riddle3hint=0x7f040011;
+        public static final int riddleHintTextView=0x7f040023;
+        public static final int riddleTextView=0x7f040022;
+        public static final int riddleTitle=0x7f040021;
+        public static final int riddles=0x7f04001d;
+        public static final int riddletitle=0x7f040006;
+        public static final int rules=0x7f04001f;
+        public static final int satellite=0x7f040002;
+        public static final int skipButton=0x7f040025;
+        public static final int splashscreen=0x7f040037;
+        public static final int terrain=0x7f040003;
+        public static final int textView0=0x7f040005;
+        public static final int textView1=0x7f040007;
+        public static final int textView2=0x7f04000b;
+        public static final int textView3=0x7f04000f;
+        public static final int txtHeader=0x7f040028;
+        public static final int txtTitle=0x7f040036;
+        public static final int username=0x7f040017;
     }
     public static final class layout {
         public static final int activity_create_riddle=0x7f030000;
@@ -94,66 +217,374 @@ public final class R {
         public static final int splash=0x7f03000a;
     }
     public static final class menu {
-        public static final int activity_create_riddle=0x7f070000;
-        public static final int activity_location_selection=0x7f070001;
-        public static final int activity_logon=0x7f070002;
-        public static final int activity_menu=0x7f070003;
-        public static final int activity_play=0x7f070004;
-        public static final int activity_playable_riddles_list=0x7f070005;
-        public static final int activity_profile=0x7f070006;
-        public static final int activity_register=0x7f070007;
-        public static final int activity_splash=0x7f070008;
+        public static final int activity_create_riddle=0x7f080000;
+        public static final int activity_location_selection=0x7f080001;
+        public static final int activity_logon=0x7f080002;
+        public static final int activity_menu=0x7f080003;
+        public static final int activity_play=0x7f080004;
+        public static final int activity_playable_riddles_list=0x7f080005;
+        public static final int activity_profile=0x7f080006;
+        public static final int activity_register=0x7f080007;
+        public static final int activity_splash=0x7f080008;
     }
     public static final class string {
-        public static final int app_name=0x7f050000;
-        public static final int cancel=0x7f050016;
-        public static final int check=0x7f05002a;
-        public static final int confirmpassword=0x7f050015;
-        public static final int createriddlebutton=0x7f050020;
-        public static final int dialog_hint_error=0x7f050027;
-        public static final int dialog_location_error=0x7f050028;
-        public static final int dialog_riddle_error=0x7f050026;
-        public static final int dialog_title_error=0x7f05002e;
-        public static final int done=0x7f050021;
-        public static final int emailaddress=0x7f050014;
-        public static final int facebookconnect=0x7f050018;
-        public static final int firstname=0x7f050010;
-        public static final int firstriddle=0x7f05001b;
-        public static final int forgotpasswordbutton=0x7f050008;
-        public static final int hello_world=0x7f050001;
-        public static final int hint=0x7f05001c;
-        public static final int lastname=0x7f05002c;
-        public static final int location=0x7f05001d;
-        public static final int login=0x7f050004;
-        public static final int loginbutton=0x7f050007;
-        public static final int logo=0x7f05000a;
-        public static final int longpress=0x7f05002b;
-        public static final int menu_settings=0x7f050002;
-        public static final int or=0x7f050017;
-        public static final int password=0x7f050006;
-        public static final int profile=0x7f050019;
-        public static final int profilebutton=0x7f05000c;
-        public static final int register=0x7f050013;
-        public static final int registerbutton=0x7f050009;
-        public static final int riddlesbutton=0x7f05000e;
-        public static final int riddletitle=0x7f05002d;
-        public static final int rulesbutton=0x7f05000d;
-        public static final int secondriddle=0x7f05001e;
-        public static final int skip=0x7f050029;
-        public static final int thirdriddle=0x7f05001f;
-        public static final int title_activity_create_riddle=0x7f05001a;
-        public static final int title_activity_location_selection=0x7f050025;
-        public static final int title_activity_logon=0x7f050003;
-        public static final int title_activity_menu=0x7f05000b;
-        public static final int title_activity_play=0x7f050024;
-        public static final int title_activity_playable_riddles_list=0x7f050022;
-        public static final int title_activity_profile=0x7f05000f;
-        public static final int title_activity_register=0x7f050012;
-        public static final int title_activity_splash=0x7f050023;
-        public static final int userimage=0x7f050011;
-        public static final int username=0x7f050005;
+        public static final int app_name=0x7f050011;
+        /**   Title for notification shown when GooglePlayServices is unavailable [CHAR LIMIT=70] 
+         */
+        public static final int auth_client_availability_notification_title=0x7f05000e;
+        /**   Title for notification shown when GooglePlayServices is unavailable [CHAR LIMIT=42] 
+         */
+        public static final int auth_client_play_services_err_notification_msg=0x7f05000f;
+        /**   Requested by string saying which app requested the notification. [CHAR LIMIT=42] 
+         */
+        public static final int auth_client_requested_by_msg=0x7f050010;
+        public static final int cancel=0x7f050027;
+        public static final int check=0x7f05003b;
+        /**  Button in confirmation dialog to enable Google Play services.  Clicking it
+        will direct user to application settings of Google Play services where they
+        can enable it [CHAR LIMIT=40] 
+         */
+        public static final int common_google_play_services_enable_button=0x7f050006;
+        /**  Message in confirmation dialog informing user they need to enable
+        Google Play services in application settings [CHAR LIMIT=NONE] 
+         */
+        public static final int common_google_play_services_enable_text=0x7f050005;
+        /**  Title of confirmation dialog informing user they need to enable
+        Google Play services in application settings [CHAR LIMIT=40] 
+         */
+        public static final int common_google_play_services_enable_title=0x7f050004;
+        /**  Button in confirmation dialog for installing Google Play services [CHAR LIMIT=40] 
+         */
+        public static final int common_google_play_services_install_button=0x7f050003;
+        /**  (For phones) Message in confirmation dialog informing user that
+        they need to install Google Play services (from Play Store) [CHAR LIMIT=NONE] 
+         */
+        public static final int common_google_play_services_install_text_phone=0x7f050001;
+        /**  (For tablets) Message in confirmation dialog informing user that
+        they need to install Google Play services (from Play Store) [CHAR LIMIT=NONE] 
+         */
+        public static final int common_google_play_services_install_text_tablet=0x7f050002;
+        /**  Title of confirmation dialog informing user that they need to install
+        Google Play services (from Play Store) [CHAR LIMIT=40] 
+         */
+        public static final int common_google_play_services_install_title=0x7f050000;
+        /**  Message in confirmation dialog informing user there is an unknown issue in Google Play
+        services [CHAR LIMIT=NONE] 
+         */
+        public static final int common_google_play_services_unknown_issue=0x7f050009;
+        /**  Message in confirmation dialog informing user that Google Play services is not supported on their device [CHAR LIMIT=NONE] 
+         */
+        public static final int common_google_play_services_unsupported_text=0x7f05000b;
+        /**  Title of confirmation dialog informing user that Google Play services is not supported on their device [CHAR LIMIT=40] 
+         */
+        public static final int common_google_play_services_unsupported_title=0x7f05000a;
+        /**  Button in confirmation dialog for updating Google Play services [CHAR LIMIT=40] 
+         */
+        public static final int common_google_play_services_update_button=0x7f05000c;
+        /**  Message in confirmation dialog informing user that they need to update
+        Google Play services (from Play Store) [CHAR LIMIT=NONE] 
+         */
+        public static final int common_google_play_services_update_text=0x7f050008;
+        /**  Title of confirmation dialog informing user that they need to update
+        Google Play services (from Play Store) [CHAR LIMIT=40] 
+         */
+        public static final int common_google_play_services_update_title=0x7f050007;
+        /**  Long form sign-in button text. This is the placeholder text, used if we can't
+        find the service-side assets. [CHAR LIMIT=25] 
+         */
+        public static final int common_signin_button_text_long=0x7f05000d;
+        public static final int confirmpassword=0x7f050026;
+        public static final int createriddlebutton=0x7f050031;
+        public static final int dialog_hint_error=0x7f050038;
+        public static final int dialog_location_error=0x7f050039;
+        public static final int dialog_riddle_error=0x7f050037;
+        public static final int dialog_title_error=0x7f05003f;
+        public static final int done=0x7f050032;
+        public static final int emailaddress=0x7f050025;
+        public static final int facebookconnect=0x7f050029;
+        public static final int firstname=0x7f050021;
+        public static final int firstriddle=0x7f05002c;
+        public static final int forgotpasswordbutton=0x7f050019;
+        public static final int hello_world=0x7f050012;
+        public static final int hint=0x7f05002d;
+        public static final int lastname=0x7f05003d;
+        public static final int location=0x7f05002e;
+        public static final int login=0x7f050015;
+        public static final int loginbutton=0x7f050018;
+        public static final int logo=0x7f05001b;
+        public static final int longpress=0x7f05003c;
+        public static final int menu_settings=0x7f050013;
+        public static final int or=0x7f050028;
+        public static final int password=0x7f050017;
+        public static final int profile=0x7f05002a;
+        public static final int profilebutton=0x7f05001d;
+        public static final int register=0x7f050024;
+        public static final int registerbutton=0x7f05001a;
+        public static final int riddlesbutton=0x7f05001f;
+        public static final int riddletitle=0x7f05003e;
+        public static final int rulesbutton=0x7f05001e;
+        public static final int secondriddle=0x7f05002f;
+        public static final int skip=0x7f05003a;
+        public static final int thirdriddle=0x7f050030;
+        public static final int title_activity_create_riddle=0x7f05002b;
+        public static final int title_activity_location_selection=0x7f050036;
+        public static final int title_activity_logon=0x7f050014;
+        public static final int title_activity_menu=0x7f05001c;
+        public static final int title_activity_play=0x7f050035;
+        public static final int title_activity_playable_riddles_list=0x7f050033;
+        public static final int title_activity_profile=0x7f050020;
+        public static final int title_activity_register=0x7f050023;
+        public static final int title_activity_splash=0x7f050034;
+        public static final int userimage=0x7f050022;
+        public static final int username=0x7f050016;
     }
     public static final class style {
-        public static final int AppTheme=0x7f060000;
+        public static final int AppTheme=0x7f070000;
     }
+    public static final class styleable {
+        /** Attributes that can be used with a MapAttrs.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #MapAttrs_cameraBearing com.richmond.riddler:cameraBearing}</code></td><td></td></tr>
+           <tr><td><code>{@link #MapAttrs_cameraTargetLat com.richmond.riddler:cameraTargetLat}</code></td><td></td></tr>
+           <tr><td><code>{@link #MapAttrs_cameraTargetLng com.richmond.riddler:cameraTargetLng}</code></td><td></td></tr>
+           <tr><td><code>{@link #MapAttrs_cameraTilt com.richmond.riddler:cameraTilt}</code></td><td></td></tr>
+           <tr><td><code>{@link #MapAttrs_cameraZoom com.richmond.riddler:cameraZoom}</code></td><td></td></tr>
+           <tr><td><code>{@link #MapAttrs_mapType com.richmond.riddler:mapType}</code></td><td></td></tr>
+           <tr><td><code>{@link #MapAttrs_uiCompass com.richmond.riddler:uiCompass}</code></td><td></td></tr>
+           <tr><td><code>{@link #MapAttrs_uiRotateGestures com.richmond.riddler:uiRotateGestures}</code></td><td></td></tr>
+           <tr><td><code>{@link #MapAttrs_uiScrollGestures com.richmond.riddler:uiScrollGestures}</code></td><td></td></tr>
+           <tr><td><code>{@link #MapAttrs_uiTiltGestures com.richmond.riddler:uiTiltGestures}</code></td><td></td></tr>
+           <tr><td><code>{@link #MapAttrs_uiZoomControls com.richmond.riddler:uiZoomControls}</code></td><td></td></tr>
+           <tr><td><code>{@link #MapAttrs_uiZoomGestures com.richmond.riddler:uiZoomGestures}</code></td><td></td></tr>
+           <tr><td><code>{@link #MapAttrs_useViewLifecycle com.richmond.riddler:useViewLifecycle}</code></td><td></td></tr>
+           <tr><td><code>{@link #MapAttrs_zOrderOnTop com.richmond.riddler:zOrderOnTop}</code></td><td></td></tr>
+           </table>
+           @see #MapAttrs_cameraBearing
+           @see #MapAttrs_cameraTargetLat
+           @see #MapAttrs_cameraTargetLng
+           @see #MapAttrs_cameraTilt
+           @see #MapAttrs_cameraZoom
+           @see #MapAttrs_mapType
+           @see #MapAttrs_uiCompass
+           @see #MapAttrs_uiRotateGestures
+           @see #MapAttrs_uiScrollGestures
+           @see #MapAttrs_uiTiltGestures
+           @see #MapAttrs_uiZoomControls
+           @see #MapAttrs_uiZoomGestures
+           @see #MapAttrs_useViewLifecycle
+           @see #MapAttrs_zOrderOnTop
+         */
+        public static final int[] MapAttrs = {
+            0x7f010000, 0x7f010001, 0x7f010002, 0x7f010003,
+            0x7f010004, 0x7f010005, 0x7f010006, 0x7f010007,
+            0x7f010008, 0x7f010009, 0x7f01000a, 0x7f01000b,
+            0x7f01000c, 0x7f01000d
+        };
+        /**
+          <p>This symbol is the offset where the {@link com.richmond.riddler.R.attr#cameraBearing}
+          attribute's value can be found in the {@link #MapAttrs} array.
+
+
+          <p>Must be a floating point value, such as "<code>1.2</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name android:cameraBearing
+        */
+        public static final int MapAttrs_cameraBearing = 1;
+        /**
+          <p>This symbol is the offset where the {@link com.richmond.riddler.R.attr#cameraTargetLat}
+          attribute's value can be found in the {@link #MapAttrs} array.
+
+
+          <p>Must be a floating point value, such as "<code>1.2</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name android:cameraTargetLat
+        */
+        public static final int MapAttrs_cameraTargetLat = 2;
+        /**
+          <p>This symbol is the offset where the {@link com.richmond.riddler.R.attr#cameraTargetLng}
+          attribute's value can be found in the {@link #MapAttrs} array.
+
+
+          <p>Must be a floating point value, such as "<code>1.2</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name android:cameraTargetLng
+        */
+        public static final int MapAttrs_cameraTargetLng = 3;
+        /**
+          <p>This symbol is the offset where the {@link com.richmond.riddler.R.attr#cameraTilt}
+          attribute's value can be found in the {@link #MapAttrs} array.
+
+
+          <p>Must be a floating point value, such as "<code>1.2</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name android:cameraTilt
+        */
+        public static final int MapAttrs_cameraTilt = 4;
+        /**
+          <p>This symbol is the offset where the {@link com.richmond.riddler.R.attr#cameraZoom}
+          attribute's value can be found in the {@link #MapAttrs} array.
+
+
+          <p>Must be a floating point value, such as "<code>1.2</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name android:cameraZoom
+        */
+        public static final int MapAttrs_cameraZoom = 5;
+        /**
+          <p>This symbol is the offset where the {@link com.richmond.riddler.R.attr#mapType}
+          attribute's value can be found in the {@link #MapAttrs} array.
+
+
+          <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>none</code></td><td>0</td><td></td></tr>
+<tr><td><code>normal</code></td><td>1</td><td></td></tr>
+<tr><td><code>satellite</code></td><td>2</td><td></td></tr>
+<tr><td><code>terrain</code></td><td>3</td><td></td></tr>
+<tr><td><code>hybrid</code></td><td>4</td><td></td></tr>
+</table>
+          @attr name android:mapType
+        */
+        public static final int MapAttrs_mapType = 0;
+        /**
+          <p>This symbol is the offset where the {@link com.richmond.riddler.R.attr#uiCompass}
+          attribute's value can be found in the {@link #MapAttrs} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name android:uiCompass
+        */
+        public static final int MapAttrs_uiCompass = 6;
+        /**
+          <p>This symbol is the offset where the {@link com.richmond.riddler.R.attr#uiRotateGestures}
+          attribute's value can be found in the {@link #MapAttrs} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name android:uiRotateGestures
+        */
+        public static final int MapAttrs_uiRotateGestures = 7;
+        /**
+          <p>This symbol is the offset where the {@link com.richmond.riddler.R.attr#uiScrollGestures}
+          attribute's value can be found in the {@link #MapAttrs} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name android:uiScrollGestures
+        */
+        public static final int MapAttrs_uiScrollGestures = 8;
+        /**
+          <p>This symbol is the offset where the {@link com.richmond.riddler.R.attr#uiTiltGestures}
+          attribute's value can be found in the {@link #MapAttrs} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name android:uiTiltGestures
+        */
+        public static final int MapAttrs_uiTiltGestures = 9;
+        /**
+          <p>This symbol is the offset where the {@link com.richmond.riddler.R.attr#uiZoomControls}
+          attribute's value can be found in the {@link #MapAttrs} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name android:uiZoomControls
+        */
+        public static final int MapAttrs_uiZoomControls = 10;
+        /**
+          <p>This symbol is the offset where the {@link com.richmond.riddler.R.attr#uiZoomGestures}
+          attribute's value can be found in the {@link #MapAttrs} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name android:uiZoomGestures
+        */
+        public static final int MapAttrs_uiZoomGestures = 11;
+        /**
+          <p>This symbol is the offset where the {@link com.richmond.riddler.R.attr#useViewLifecycle}
+          attribute's value can be found in the {@link #MapAttrs} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name android:useViewLifecycle
+        */
+        public static final int MapAttrs_useViewLifecycle = 12;
+        /**
+          <p>This symbol is the offset where the {@link com.richmond.riddler.R.attr#zOrderOnTop}
+          attribute's value can be found in the {@link #MapAttrs} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name android:zOrderOnTop
+        */
+        public static final int MapAttrs_zOrderOnTop = 13;
+    };
 }

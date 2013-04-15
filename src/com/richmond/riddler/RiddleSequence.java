@@ -2,23 +2,26 @@ package com.richmond.riddler;
 
 public class RiddleSequence {
 	
-	private long id;
+	private String id;
 	private String riddletitle;
 	private String riddleone;
 	private String riddletwo;
 	private String riddlethree;	  
 	private String riddleonehint;
 	private String riddletwohint;
-	private String riddlethreehint;  
-	private String riddleonelocation;
-	private String riddletwolocation;
-	private String riddlethreelocation;
-	private String distance;
+	private String riddlethreehint; 
+	private double riddleonelocationLong;
+	private double riddleonelocationLat;
+	private double riddletwolocationLong;
+	private double riddletwolocationLat;
+	private double riddlethreelocationLong;
+	private double riddlethreelocationLat;
+	private double distance;
 	  
-	public long getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	public String getRiddletitle() {
@@ -63,31 +66,50 @@ public class RiddleSequence {
 	public void setRiddlethreehint(String riddlethreehint) {
 		this.riddlethreehint = riddlethreehint;
 	}
-	public String getRiddleonelocation() {
-		return riddleonelocation;
+
+
+	public double getRiddleonelocationLong() {
+		return riddleonelocationLong;
 	}
-	public void setRiddleonelocation(String riddleonelocation) {
-		this.riddleonelocation = riddleonelocation;
+	public void setRiddleonelocationLong(double riddleonelocationLong) {
+		this.riddleonelocationLong = riddleonelocationLong;
 	}
-	public String getRiddletwolocation() {
-		return riddletwolocation;
+	public double getRiddleonelocationLat() {
+		return riddleonelocationLat;
 	}
-	public void setRiddletwolocation(String riddletwolocation) {
-		this.riddletwolocation = riddletwolocation;
+	public void setRiddleonelocationLat(double riddleonelocationLat) {
+		this.riddleonelocationLat = riddleonelocationLat;
 	}
-	public String getRiddlethreelocation() {
-		return riddlethreelocation;
+	public double getRiddletwolocationLong() {
+		return riddletwolocationLong;
 	}
-	public void setRiddlethreelocation(String riddlethreelocation) {
-		this.riddlethreelocation = riddlethreelocation;
+	public void setRiddletwolocationLong(double riddletwolocationLong) {
+		this.riddletwolocationLong = riddletwolocationLong;
 	}
-	public String getDistance() {
+	public double getRiddletwolocationLat() {
+		return riddletwolocationLat;
+	}
+	public void setRiddletwolocationLat(double riddletwolocationLat) {
+		this.riddletwolocationLat = riddletwolocationLat;
+	}
+	public double getRiddlethreelocationLong() {
+		return riddlethreelocationLong;
+	}
+	public void setRiddlethreelocationLong(double riddlethreelocationLong) {
+		this.riddlethreelocationLong = riddlethreelocationLong;
+	}
+	public double getRiddlethreelocationLat() {
+		return riddlethreelocationLat;
+	}
+	public void setRiddlethreelocationLat(double riddlethreelocationLat) {
+		this.riddlethreelocationLat = riddlethreelocationLat;
+	}
+	public double getDistance() {
 		return distance;
 	}
-	public void setDistance(String distance) {
+	public void setDistance(double distance) {
 		this.distance = distance;
 	}
-	
 	@Override
 	public String toString() {
 		return "RiddleSequence [id=" + id + ", riddletitle=" + riddletitle
@@ -95,12 +117,18 @@ public class RiddleSequence {
 				+ ", riddlethree=" + riddlethree + ", riddleonehint="
 				+ riddleonehint + ", riddletwohint=" + riddletwohint
 				+ ", riddlethreehint=" + riddlethreehint
-				+ ", riddleonelocation=" + riddleonelocation
-				+ ", riddletwolocation=" + riddletwolocation
-				+ ", riddlethreelocation=" + riddlethreelocation
+				+ ", riddleonelocationLong=" + riddleonelocationLong
+				+ ", riddleonelocationLat=" + riddleonelocationLat
+				+ ", riddletwolocationLong=" + riddletwolocationLong
+				+ ", riddletwolocationLat=" + riddletwolocationLat
+				+ ", riddlethreelocationLong=" + riddlethreelocationLong
+				+ ", riddlethreelocationLat=" + riddlethreelocationLat
 				+ ", distance=" + distance + "]";
 	}
 	
 
+
+}
 	
-} 
+
+	

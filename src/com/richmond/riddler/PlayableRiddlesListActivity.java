@@ -3,14 +3,16 @@ package com.richmond.riddler;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ListView;
 import android.widget.Toast;
 
 public class PlayableRiddlesListActivity extends Activity{ 
-    private RiddlesDataSource datasource;
+    //private RiddlesDataSource datasource;
     private ListView mList;
     MyAdapter adapter; 
 	GPSTracker gps;
@@ -22,14 +24,25 @@ public class PlayableRiddlesListActivity extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_playable_riddles_list);
 		
-		datasource = new RiddlesDataSource(this);
-		datasource.open();
+//		datasource = new RiddlesDataSource(this);
+//		datasource.open();
+        HttpGetList requests = new HttpGetList();
+        long zero = 0;
+        requests.execute(zero);
+		try {
+			values = requests.get();
+			//Log.i("values", values.indexOf(0))
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//addDistancetoValues();
+		//sortValues();
 		
-		values = datasource.getAllRiddles();		
-		addDistancetoValues();
-		sortValues();
-		
-		adapter = new MyAdapter(this, R.layout.listview_item_row, valuesSorted); 
+		adapter = new MyAdapter(this, R.layout.listview_item_row, values); 
 		
 		mList = (ListView)findViewById(R.id.listView1);
 		
@@ -71,30 +84,30 @@ public class PlayableRiddlesListActivity extends Activity{
     }
 
 
-	private void addDistancetoValues() {
-		getLocation();
-		double additionalDistance, totalDistance;
-		
-	        for(int i=0; i < values.size(); i++){
-	        	 additionalDistance = DistanceBetweenTwo(Double.valueOf(values.get(i).getRiddleonelocation().split(",")[0]), 
-     				   Double.valueOf(values.get(i).getRiddleonelocation().split(",")[1]), 
-     				   latitude, longitude);
-	        	totalDistance = (Double.valueOf(values.get(i).getDistance()) + additionalDistance);
-	        	values.get(i).setDistance(String.valueOf(totalDistance));
-	        }
-	}
+//	private void addDistancetoValues() {
+//		getLocation();
+//		double additionalDistance, totalDistance;
+//		
+//	        for(int i=0; i < values.size(); i++){
+//	        	 additionalDistance = DistanceBetweenTwo(Double.valueOf(values.get(i).getRiddleonelocation().split(",")[0]), 
+//     				   Double.valueOf(values.get(i).getRiddleonelocation().split(",")[1]), 
+//     				   latitude, longitude);
+//	        	totalDistance = (Double.valueOf(values.get(i).getDistance()) + additionalDistance);
+//	        	values.get(i).setDistance(String.valueOf(totalDistance));
+//	        }
+//	}
 
 
 
 	@Override
 	  protected void onResume() {
-	    datasource.open();
+	   // datasource.open();
 	    super.onResume();
 	  }
 
 	  @Override
 	  protected void onPause() {
-	    datasource.close();
+	   // datasource.close();
 	    super.onPause();
 	  }
 

@@ -1,5 +1,7 @@
 package com.richmond.riddler;
 
+import java.util.concurrent.ExecutionException;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -21,7 +23,7 @@ public class PlayActivity extends Activity implements OnClickListener {
 	private Button hintButton, checkButton, skipButton;
 	private boolean hintIsShowing = false, skipWasUsed = false;
 	private TextView textViewRiddle, textViewHint, textViewTitle;
-	private RiddlesDataSource database = new RiddlesDataSource(this);
+	//private RiddlesDataSource database = new RiddlesDataSource(this);
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -33,8 +35,18 @@ public class PlayActivity extends Activity implements OnClickListener {
 		currentRiddle = intent.getIntExtra(MyAdapter.CURRENT_RIDDLE, -1);
 		skipWasUsed   = intent.getBooleanExtra(MyAdapter.SKIP_USED, false);
 				
-		database.open();
-		riddles = database.getRiddles(riddleID);
+		//database.open();
+		HttpGetList response = new HttpGetList();
+		response.execute(riddleID);
+		try {
+			riddles = response.get().get(0);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		hintButton  = (Button) findViewById(R.id.hintButton);
 		checkButton = (Button) findViewById(R.id.checkButton);
@@ -107,24 +119,28 @@ public class PlayActivity extends Activity implements OnClickListener {
 										"\nLong: " + longitude, 
 					Toast.LENGTH_LONG).show();
 
-			String[] riddlelocationstring= null;	
+			double riddlelocationLong= 0;	
+			double riddlelocationLat = 0;
 			String delims = ",";
 			
 			switch (currentRiddle) {
 			case 1:
-				riddlelocationstring = riddles.getRiddleonelocation().split(delims);
+				riddlelocationLong = riddles.getRiddleonelocationLong();
+				riddlelocationLat = riddles.getRiddleonelocationLat();
 				break;
 			case 2:
-				riddlelocationstring = riddles.getRiddletwolocation().split(delims);
+				riddlelocationLong = riddles.getRiddletwolocationLong();
+				riddlelocationLat = riddles.getRiddletwolocationLat();
 				break;
 			case 3:
-				riddlelocationstring = riddles.getRiddlethreelocation().split(delims);
+				riddlelocationLong = riddles.getRiddlethreelocationLong();
+				riddlelocationLat = riddles.getRiddlethreelocationLat();
 				break;
 			}
 			//Log.e("locatoin" , riddlelocationstring[0] + riddlelocationstring[1]);
 			
 																																		//Tolerance
-			if (DistanceBetweenTwo(latitude, longitude, Double.valueOf(riddlelocationstring[0]), Double.valueOf(riddlelocationstring[1])) < .09) {
+			if (DistanceBetweenTwo(latitude, longitude, riddlelocationLong, riddlelocationLat) < .09) {
 				if(currentRiddle == 3){
 					AlertUserOfFinishedSequence();
 				}
