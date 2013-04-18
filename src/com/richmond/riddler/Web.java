@@ -3,8 +3,16 @@ package com.richmond.riddler;
 public class Web {
 
 	public static final String BASE_URL = "http://riddler.rs.af.cm";
-	public static final String POST = "/riddles";
-	public static final String GET = "/riddles";
+	public static final String POSTRIDDLE = "/riddles";
+	public static final String GETRIDDLES = "/riddles";
+	public static final String GETRIDDLE = "/riddles/";
+	public static final String INCPOINTS = "$inc";
+	public static final String POSTUSER = "/users";
+	public static final String GETUSER = "/users/";
+	public static final String UPDATEUSER = "/users/";
+	public static final String POINTS = "points";
+	
+	public static final String USERNAME = "username";
 
 	public static final String TABLE_RIDDLES = "riddles";
 	public static final String ID = "_id";
@@ -23,6 +31,5 @@ public class Web {
 	public static final String LAT = "lat";
 	public static final String RIDDLES = "riddles";
 	public static final String HINTS = "hints";
-
-	private static final String DATABASE_NAME = "riddles.db";
+	
 }

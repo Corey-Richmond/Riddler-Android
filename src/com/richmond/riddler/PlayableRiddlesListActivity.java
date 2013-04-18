@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -17,6 +17,8 @@ public class PlayableRiddlesListActivity extends Activity{
     MyAdapter adapter; 
 	GPSTracker gps;
 	double latitude, longitude;
+	ProgressDialog dialog;
+	
 	List<RiddleSequence> values;
 	List<RiddleSequence> valuesSorted = new LinkedList<RiddleSequence>();
     @Override
@@ -26,6 +28,9 @@ public class PlayableRiddlesListActivity extends Activity{
 		
 //		datasource = new RiddlesDataSource(this);
 //		datasource.open();
+        dialog = ProgressDialog.show(PlayableRiddlesListActivity.this, "", 
+                "Loading. Please wait...", true);
+        
         HttpGetList requests = new HttpGetList();
         long zero = 0;
         requests.execute(zero);
@@ -47,6 +52,7 @@ public class PlayableRiddlesListActivity extends Activity{
 		mList = (ListView)findViewById(R.id.listView1);
 		
 		mList.setAdapter(adapter);
+		dialog.dismiss();
 	}
 
 

@@ -106,7 +106,7 @@ public class PlayActivity extends Activity implements OnClickListener {
 	private void checkForGPS() {
 		// create class object
 		gps = new GPSTracker(this);
-
+		//gps.getLocation();
 		// check if GPS enabled
 		if (gps.canGetLocation()) {
 
@@ -121,7 +121,6 @@ public class PlayActivity extends Activity implements OnClickListener {
 
 			double riddlelocationLong= 0;	
 			double riddlelocationLat = 0;
-			String delims = ",";
 			
 			switch (currentRiddle) {
 			case 1:
@@ -165,6 +164,16 @@ public class PlayActivity extends Activity implements OnClickListener {
 		alertDialog.setMessage("You Solved Riddle Number " + currentRiddle
 				+ " of 3");
 
+		// add points
+        HttpRequests response = new HttpRequests();
+        int points = 2;
+        if(skipWasUsed)
+        	points = 0;
+        if(hintIsShowing)
+        	points = 1;
+        response.createAddPoints(points);
+        response.execute();
+		
 		// on pressing cancel button
 		alertDialog.setNegativeButton("COOL",
 				new DialogInterface.OnClickListener() {

@@ -37,19 +37,20 @@ public class MenuActivity extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		switch(v.getId()) {
 	        case R.id.profile:
-	        	Profile(v);
+	        	HttpGetUserInfo info = new HttpGetUserInfo(this);
+	        	info.execute(getIntent().getStringExtra(Web.USERNAME));
 	        	break;
 	        case R.id.createriddle:
 	        	CreateRiddle(v);
 	        	break;
 	        case R.id.riddles:
-	        	PlayRiddles(v);
+	        	PlayRiddles();
 	        	break;
 		}
 		
 	}
 
-	private void PlayRiddles(View v) {
+	private void PlayRiddles() {
 		Intent intent = new Intent(this, PlayableRiddlesListActivity.class);
     	startActivity(intent);
 	}
@@ -59,8 +60,4 @@ public class MenuActivity extends Activity implements OnClickListener {
     	startActivity(intent);
 	}
 
-	private void Profile(View v) {
-		Intent intent = new Intent(this, ProfileActivity.class);
-    	startActivity(intent);
-	}
 }

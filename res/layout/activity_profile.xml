@@ -2,73 +2,69 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background">
+    android:background="@drawable/background" >
 
     <ImageButton
         android:id="@+id/profile_picture"
         android:layout_width="100dp"
-    	android:layout_height="100dp"	
-    	android:src="@drawable/ic_launcher"
-    	android:contentDescription="@string/userimage"    
-    />
-    
-    <EditText
-        android:id="@+id/firstname"
-        android:layout_width="match_parent"
-    	android:layout_height="wrap_content"
-    	android:hint="@string/firstname"                  
-        android:textColorHint="@color/black"
-        android:inputType="textNoSuggestions" 
-        android:layout_toRightOf="@+id/profile_picture"  
-    />
+        android:layout_height="100dp"
+        android:contentDescription="@string/userimage"
+        android:src="@drawable/ic_launcher" />
 
-    <EditText
-        android:id="@+id/lastname"
+    <TextView
+        android:id="@+id/pointline"
         android:layout_width="match_parent"
-    	android:layout_height="wrap_content"
-    	android:hint="@string/lastname"                  
-        android:textColorHint="@color/black"
-        android:inputType="textNoSuggestions" 
-        android:layout_toRightOf="@+id/profile_picture"  
-        android:layout_below="@+id/firstname"  
-    />
-    
-    <TextView 
-       android:id="@+id/pointline"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:background="@color/blue"
-       android:layout_below="@+id/profile_picture"
-       android:textColor="@color/white"
-       android:text="Number of Points you have"
-       android:gravity="top|center_vertical|center_horizontal"
-    />
-    <TextView 
-       android:id="@+id/numofpoints"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:layout_below="@+id/pointline"
-       android:textSize="30dp"
-       android:textColor="@color/white"
-       android:text="0"
-       android:gravity="top|center_vertical|center_horizontal"
-    />
-    <TextView 
-       android:id="@+id/medalsline"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:background="@color/blue"
-       android:layout_below="@+id/numofpoints"
-       android:textColor="@color/white"
-       android:text="Medals"
-       android:gravity="top|center_vertical|center_horizontal"
-    />
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/profile_picture"
+        android:background="@color/blue"
+        android:gravity="top|center_vertical|center_horizontal"
+        android:text="Number of Points you have"
+        android:textColor="@color/white" />
 
-	<ImageView
-	    android:layout_width="40dp"
-	    android:layout_height="40dp"
-	    android:layout_below="@+id/medalsline"
-	    android:layout_centerHorizontal="true"
-	    android:src="@drawable/gold_medal" />
+    <TextView
+        android:id="@+id/numofpoints"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/pointline"
+        android:gravity="top|center_vertical|center_horizontal"
+        android:text="0"
+        android:textColor="@color/white"
+        android:textSize="30dp" />
+
+    <TextView
+        android:id="@+id/medalsline"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/numofpoints"
+        android:background="@color/blue"
+        android:gravity="top|center_vertical|center_horizontal"
+        android:text="Medals"
+        android:textColor="@color/white" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/medalsline"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/gold_medal" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/username"
+        android:layout_alignParentTop="true"
+        android:text="First Name"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/name"
+        android:layout_toRightOf="@+id/profile_picture"
+        android:text="UserName"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>
