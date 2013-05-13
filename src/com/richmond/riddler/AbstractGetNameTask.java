@@ -35,7 +35,16 @@ import java.net.URL;
  * isn't integral to getting the tokens.
  */
 public abstract class AbstractGetNameTask extends AsyncTask<Void, Void, Void>{
-    private static final String TAG = "TokenInfoTask";
+    public static String getmName() {
+		return mName;
+	}
+
+
+	public static void setmName(String mName) {
+		AbstractGetNameTask.mName = mName;
+	}
+
+	private static final String TAG = "TokenInfoTask";
     private static final String NAME_KEY = "given_name";
     protected LogonActivity mActivity;
 

@@ -13,6 +13,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.GoogleAuthUtil;
+import com.richmond.riddler.http.HttpGetUserInfo;
 
 public class LogonActivity extends Activity {
 	
@@ -34,8 +35,6 @@ public class LogonActivity extends Activity {
     private String mEmail;
 
     
-
-
     public static String TYPE_KEY = "type_key";
     public static enum Type {FOREGROUND, BACKGROUND, BACKGROUND_WITH_SYNC}
 	
@@ -55,8 +54,8 @@ public class LogonActivity extends Activity {
 
 
 	public void Login(){
-    	HttpGetUserInfo info = new HttpGetUserInfo(this);
-    	info.execute(mEmail);
+//    	HttpGetUserInfo info = new HttpGetUserInfo(this);
+//    	info.execute(mEmail);
     	Intent intent = new Intent(this, MenuActivity.class);
     	intent.putExtra(Web.USERNAME, mEmail);
     	startActivity(intent);

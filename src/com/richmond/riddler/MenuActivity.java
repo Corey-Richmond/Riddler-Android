@@ -1,12 +1,19 @@
 package com.richmond.riddler;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+
+import com.richmond.riddler.http.HttpGetUserInfo;
 
 public class MenuActivity extends Activity implements OnClickListener {
 
@@ -26,8 +33,16 @@ public class MenuActivity extends Activity implements OnClickListener {
         profileButton.setOnClickListener(this);
         createRiddleButton.setOnClickListener(this);
         riddlesButton.setOnClickListener(this);
+             
+    	HttpGetUserInfo info = new HttpGetUserInfo(this);
+    	info.execute(getIntent().getStringExtra(Web.USERNAME));
+
+
     }
 
+    
+
+    
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_menu, menu);
@@ -37,11 +52,10 @@ public class MenuActivity extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		switch(v.getId()) {
 	        case R.id.profile:
-	        	HttpGetUserInfo info = new HttpGetUserInfo(this);
-	        	info.execute(getIntent().getStringExtra(Web.USERNAME));
+	        	Profile();
 	        	break;
 	        case R.id.createriddle:
-	        	CreateRiddle(v);
+	        	CreateRiddle();
 	        	break;
 	        case R.id.riddles:
 	        	PlayRiddles();
@@ -49,13 +63,18 @@ public class MenuActivity extends Activity implements OnClickListener {
 		}
 		
 	}
+	private void Profile() {
+		Intent intent = new Intent(this, ProfileActivity.class);
+		startActivity(intent);
+	}
+	
 
 	private void PlayRiddles() {
 		Intent intent = new Intent(this, PlayableRiddlesListActivity.class);
     	startActivity(intent);
 	}
 
-	private void CreateRiddle(View v) {
+	private void CreateRiddle() {
 		Intent intent = new Intent(this, CreateRiddleActivity.class);
     	startActivity(intent);
 	}

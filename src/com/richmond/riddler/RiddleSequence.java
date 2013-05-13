@@ -1,6 +1,16 @@
 package com.richmond.riddler;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.SequenceInputStream;
+
+import org.apache.http.HttpRequest;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
 public class RiddleSequence {
 
@@ -19,15 +29,17 @@ public class RiddleSequence {
 	private double riddlethreelocationLong;
 	private double riddlethreelocationLat;
 	private double distance;
+	private String createdby;
 
-	public RiddleSequence(String id, String aRiddletitle, String aRiddleone,
+	public RiddleSequence(String aID, String aRiddletitle, String aRiddleone,
 			String aRiddletwo, String aRiddlethree, String aRiddleonehint,
 			String aRiddletwohint, String aRiddlethreehint,
 			double aRiddleonelocationLong, double aRiddleonelocationLat,
 			double aRiddletwolocationLong, double aRiddletwolocationLat,
 			double aRiddlethreelocationLong, double aRiddlethreelocationLat,
-			double aDistance) {
+			double aDistance, String aCreatedBy) {
 		// TODO Auto-generated constructor stub
+		id = aID;
 		riddletitle = aRiddletitle;
 		riddleone = aRiddleone;
 		riddletwo = aRiddletwo;
@@ -42,6 +54,7 @@ public class RiddleSequence {
 		riddlethreelocationLong = aRiddlethreelocationLong;
 		riddlethreelocationLat = aRiddlethreelocationLat;
 		distance = aDistance;
+		createdby = aCreatedBy;
 	}
 
 	public String getId() {
@@ -164,6 +177,14 @@ public class RiddleSequence {
 		this.distance = distance;
 	}
 
+	public String getCreatedby() {
+		return createdby;
+	}
+
+	public void setCreatedby(String createdby) {
+		this.createdby = createdby;
+	}
+
 	@Override
 	public String toString() {
 		return "RiddleSequence [id=" + id + ", riddletitle=" + riddletitle
@@ -177,7 +198,7 @@ public class RiddleSequence {
 				+ ", riddletwolocationLat=" + riddletwolocationLat
 				+ ", riddlethreelocationLong=" + riddlethreelocationLong
 				+ ", riddlethreelocationLat=" + riddlethreelocationLat
-				+ ", distance=" + distance + "]";
+				+ ", distance=" + distance + ", createdby=" + createdby + "]";
 	}
 
 	public JSONObject toJSON() {
@@ -212,12 +233,49 @@ public class RiddleSequence {
 			JSONriddle.put(Web.RIDDLE_TWO_LOCATION, locationTwo);
 			JSONriddle.put(Web.RIDDLE_THREE_LOCATION, locationThree);
 			JSONriddle.put(Web.DISTANCE, distance);
+			JSONriddle.put(Web.USERNAME, createdby);
 		} catch (Exception e) {
 			e.printStackTrace();
 			// createDialog("Error", "Cannot Estabilish Connection");
 		}
-		
+
 		return JSONriddle;
+	}
+
+	public RiddleSequence(JSONObject info) {
+
+		try{
+
+			JSONObject riddles = info.getJSONObject(Web.RIDDLES);
+			JSONObject hints = info.getJSONObject(Web.HINTS);
+			JSONObject l1 = info.getJSONObject(Web.RIDDLE_ONE_LOCATION);
+			JSONObject l2 = info.getJSONObject(Web.RIDDLE_TWO_LOCATION);
+			JSONObject l3 = info.getJSONObject(Web.RIDDLE_THREE_LOCATION);
+
+			
+			this.id = info.getString("_id");
+			this.riddletitle = info.getString(Web.RIDDLE_TITLE);
+			this.riddleone = riddles.getString(Web.RIDDLE_ONE);
+			this.riddletwo =	riddles.getString(Web.RIDDLE_TWO);
+			this.riddlethree = riddles.getString(Web.RIDDLE_THREE);
+			this.riddleonehint =	hints.getString(Web.RIDDLE_ONE_HINT);
+			this.riddletwohint = hints.getString(Web.RIDDLE_TWO_HINT);
+			this.riddlethreehint = hints.getString(Web.RIDDLE_THREE_HINT);
+			this.riddleonelocationLong =	l1.getDouble(Web.LONG);
+			this.riddleonelocationLat = l1.getDouble(Web.LAT);
+			this.riddletwolocationLong = l2.getDouble(Web.LONG);
+			this.riddletwolocationLat = l2.getDouble(Web.LAT);
+			this.riddlethreelocationLong = l3.getDouble(Web.LONG);
+			this.riddlethreelocationLat = l3.getDouble(Web.LAT);
+			this.distance = info.getDouble(Web.DISTANCE);
+			this.createdby = info.getString(Web.USERNAME);
+
+			
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 }

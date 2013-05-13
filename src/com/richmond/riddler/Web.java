@@ -1,8 +1,10 @@
 package com.richmond.riddler;
 
+import java.util.List;
+
 public class Web {
 
-	public static final String BASE_URL = "http://riddler.rs.af.cm";
+	public static final String BASE_URL = "http://riddler.aws.af.cm";
 	public static final String POSTRIDDLE = "/riddles";
 	public static final String GETRIDDLES = "/riddles";
 	public static final String GETRIDDLE = "/riddles/";
@@ -11,8 +13,19 @@ public class Web {
 	public static final String GETUSER = "/users/";
 	public static final String UPDATEUSER = "/users/";
 	public static final String POINTS = "points";
+	public static final String RIDDLESCREATED = "riddlescreated";
+	public static final String RIDDLESSTARTED = "riddlesstarted";
+	
+	public static final String RIDDLESSOLVEDWITHSKIP = "riddlessolvedwithskip";
+	public static final String RIDDLESSOLVEDWITHOUTSKIPS = "riddlessolvedwithoutskip";
+	
+	
 	
 	public static final String USERNAME = "username";
+	public static final String FIRSTNAME = "firstname";
+	
+	
+	public static final String CURRENTRIDDLE = "currentriddle";
 
 	public static final String TABLE_RIDDLES = "riddles";
 	public static final String ID = "_id";
@@ -31,5 +44,6 @@ public class Web {
 	public static final String LAT = "lat";
 	public static final String RIDDLES = "riddles";
 	public static final String HINTS = "hints";
+	public static final String SKIPS = "skips";
 	
 }

@@ -1,5 +1,7 @@
 package com.richmond.riddler;
 
+import com.richmond.riddler.http.HttpPostRiddle;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -122,7 +124,7 @@ public class CreateRiddleActivity extends Activity implements OnClickListener {
 					.getText().toString(), riddle3.getText().toString(),
 					riddle1hint.getText().toString(), riddle2hint.getText()
 							.toString(), riddle3hint.getText().toString(),
-					longi1, lat1, longi2, lat2, longi3, lat3, distance);
+					longi1, lat1, longi2, lat2, longi3, lat3, distance, AbstractGetNameTask.getmEmailAddress());
 			
 	        HttpPostRiddle post = new HttpPostRiddle(this, riddles);
 	        post.execute();
@@ -164,7 +166,7 @@ public class CreateRiddleActivity extends Activity implements OnClickListener {
 
 	private boolean validateLocations() {
 		return (lat1 != 0 && longi1 != 0 && lat2 != 0 && longi2 != 0
-				&& lat2 != 0 && longi2 != 0);
+				&& lat3 != 0 && longi3 != 0);
 	}
 
 	private void CalculateTotalDistance(double[] locations) {

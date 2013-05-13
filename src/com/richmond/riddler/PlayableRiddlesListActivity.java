@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.richmond.riddler.http.HttpGetListOfRiddles;
+
 public class PlayableRiddlesListActivity extends Activity{ 
     //private RiddlesDataSource datasource;
     private ListView mList;
@@ -25,17 +27,14 @@ public class PlayableRiddlesListActivity extends Activity{
     public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_playable_riddles_list);
-		
-//		datasource = new RiddlesDataSource(this);
-//		datasource.open();
+
         dialog = ProgressDialog.show(PlayableRiddlesListActivity.this, "", 
                 "Loading. Please wait...", true);
         
-        HttpGetList requests = new HttpGetList();
-        long zero = 0;
-        requests.execute(zero);
+        HttpGetListOfRiddles requests = new HttpGetListOfRiddles();
+
 		try {
-			values = requests.get();
+			values = requests.execute().get();
 			//Log.i("values", values.indexOf(0))
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block

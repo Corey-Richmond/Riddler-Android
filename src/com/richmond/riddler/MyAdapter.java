@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,13 +63,13 @@ public class MyAdapter extends ArrayAdapter<RiddleSequence> {
                      RiddleSequence riddle = data.get(rowNumber);
                      intent.putExtra(RIDDLES_ID, riddle.getId());
                      intent.putExtra(CURRENT_RIDDLE, 1);                     
-                     Log.i("Riddle_ID", String.valueOf(riddle.getId()));
+                     Log.i("Riddle_ID", riddle.getId());
                      getContext().startActivity(intent);
                      
                  }
              }); 
             RiddleSequence riddle = data.get(rowNumber);
-            Log.i("Riddle_ID", String.valueOf(riddle.getId()));
+            Log.i("Riddle_ID", riddle.getId());
         }
         else
         {
@@ -78,14 +79,23 @@ public class MyAdapter extends ArrayAdapter<RiddleSequence> {
         holder.count.setText((position+1)+"");
         holder.txtTitle.setText(riddles.getRiddletitle());
 
-        
+
         
         //holder.imgIcon.setImageResource(R.drawable.ic_launcher);
         
         if(position % 2 == 0){
         	row.setBackgroundColor(Color.WHITE);
         }else{
-        	row.setBackgroundColor(Color.CYAN);
+        	   GradientDrawable gd = new GradientDrawable(
+        	            GradientDrawable.Orientation.TOP_BOTTOM,
+        	            new int[] {0x33000000,0x330000FF});
+        	    gd.setCornerRadius(0f);
+        	row.setBackgroundDrawable(gd);
+        }
+        
+        if(riddles.getCreatedby().equals(AbstractGetNameTask.getmEmailAddress())){
+        	row.setBackgroundColor(Color.YELLOW);
+        	row.setClickable(false);
         }
         return row;
     }
