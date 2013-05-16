@@ -24,6 +24,7 @@ public class MyAdapter extends ArrayAdapter<RiddleSequence> {
     Context context; 
     int layoutResourceId;    
     List<RiddleSequence> data = null;
+    private User mUser;
     
 
 
@@ -32,6 +33,8 @@ public class MyAdapter extends ArrayAdapter<RiddleSequence> {
         this.layoutResourceId = layoutResourceId;
         this.context = context;
         this.data = data;
+        mUser = new User();
+        mUser.loadSerializedObject();
 
     }
 
@@ -50,7 +53,7 @@ public class MyAdapter extends ArrayAdapter<RiddleSequence> {
             row = inflater.inflate(layoutResourceId, parent, false);
             
             holder = new RiddleHolder();
-            holder.imgIcon  = (ImageView)row.findViewById(R.id.imgIcon);
+            holder.currentRiddle  = (TextView)row.findViewById(R.id.currentRiddle);
             holder.txtTitle = (TextView)row.findViewById(R.id.txtTitle);
             holder.count    = (TextView)row.findViewById(R.id.count);
             
@@ -78,10 +81,13 @@ public class MyAdapter extends ArrayAdapter<RiddleSequence> {
         RiddleSequence riddles = data.get(position);
         holder.count.setText((position+1)+"");
         holder.txtTitle.setText(riddles.getRiddletitle());
+        RiddlesStarted started = new RiddlesStarted(riddles.getId(), 0, false, false);
+        int index;
+        if( (index = started.isIn(mUser.getRiddlesStarted())) != -1)
+        	holder.currentRiddle.setText(mUser.getRiddlesStarted().get(index).getCurrentRiddle()+"");
 
 
         
-        //holder.imgIcon.setImageResource(R.drawable.ic_launcher);
         
         if(position % 2 == 0){
         	row.setBackgroundColor(Color.WHITE);
@@ -103,7 +109,7 @@ public class MyAdapter extends ArrayAdapter<RiddleSequence> {
     static class RiddleHolder
     {
     	TextView count;
-        ImageView imgIcon;
+    	TextView currentRiddle;
         TextView txtTitle;
     }
     

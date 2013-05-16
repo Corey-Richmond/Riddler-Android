@@ -21,7 +21,7 @@ public class ProfileActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         mUser = new User();
-        mUser = (User) mUser.loadSerializedObject();
+        mUser.loadSerializedObject();
 		Log.i("user", mUser.toString());
         mName = (TextView) findViewById(R.id.name);
         mName.setText(mUser.getFirstName());

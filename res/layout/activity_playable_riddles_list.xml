@@ -7,21 +7,33 @@
     <LinearLayout android:id="@+id/listViewHeader"
         		  android:orientation="horizontal"
                   android:layout_width="fill_parent"
-                  android:layout_height="wrap_content"> 
+                  android:layout_height="wrap_content"
+                  android:background="#336699"
+                  android:weightSum="1"> 
                   
         
      <TextView android:id="@+id/txtHeader"
-        android:layout_width="fill_parent"
+        android:layout_width="0px"
+        android:layout_weight=".8"
         android:layout_height="fill_parent"
         android:gravity="center_vertical"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentBottom="true"
         android:textStyle="bold"
         android:textSize="15dp"
         android:textColor="#FFFFFF"
         android:padding="10dp"
-        android:text="Ordered By Total Distance Need To Travel"
-        android:background="#336699" />
+        android:text="Ordered By ..."
+         />
+     
+      <TextView android:id="@+id/listCurRid"
+        android:layout_width="0px"
+        android:layout_weight=".2"
+        android:layout_height="fill_parent"
+        android:gravity="center_vertical"
+        android:textStyle="bold"
+        android:textSize="15dp"
+        android:textColor="#FFFFFF"
+        android:padding="10dp"
+        android:text="Cur Rid" />
     </LinearLayout>
 
     <ListView

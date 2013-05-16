@@ -145,38 +145,39 @@ containing a value of this type.
         public static final int pin=0x7f020005;
     }
     public static final class id {
-        public static final int cancel=0x7f040032;
+        public static final int cancel=0x7f040033;
         public static final int checkButton=0x7f040023;
-        public static final int confirmpassword=0x7f040030;
-        public static final int confirmregistration=0x7f040031;
-        public static final int count=0x7f040033;
+        public static final int confirmpassword=0x7f040031;
+        public static final int confirmregistration=0x7f040032;
+        public static final int count=0x7f040034;
         public static final int createriddle=0x7f04001b;
+        public static final int currentRiddle=0x7f040036;
         public static final int donebutton=0x7f040013;
-        public static final int emailaddress=0x7f04002e;
+        public static final int emailaddress=0x7f04002f;
         public static final int facebookconnece=0x7f040019;
         public static final int hintButton=0x7f040021;
         public static final int hybrid=0x7f040004;
-        public static final int imageView1=0x7f04002b;
-        public static final int imgIcon=0x7f040034;
-        public static final int listView1=0x7f040026;
+        public static final int imageView1=0x7f04002c;
+        public static final int listCurRid=0x7f040026;
+        public static final int listView1=0x7f040027;
         public static final int listViewHeader=0x7f040024;
         public static final int login=0x7f040018;
         public static final int logo=0x7f040016;
         public static final int mapDone=0x7f040015;
         public static final int mapview=0x7f040014;
-        public static final int medalsline=0x7f04002a;
-        public static final int menu_settings=0x7f040037;
-        public static final int name=0x7f04002c;
+        public static final int medalsline=0x7f04002b;
+        public static final int menu_settings=0x7f040038;
+        public static final int name=0x7f04002d;
         public static final int none=0x7f040000;
         public static final int normal=0x7f040001;
-        public static final int numofpoints=0x7f040029;
-        public static final int password=0x7f04002f;
+        public static final int numofpoints=0x7f04002a;
+        public static final int password=0x7f040030;
         public static final int pinfirstriddle=0x7f04000a;
         public static final int pinsecondriddle=0x7f04000e;
         public static final int pinthirdriddle=0x7f040012;
-        public static final int pointline=0x7f040028;
+        public static final int pointline=0x7f040029;
         public static final int profile=0x7f04001d;
-        public static final int profile_picture=0x7f040027;
+        public static final int profile_picture=0x7f040028;
         public static final int riddle1=0x7f040008;
         public static final int riddle1hint=0x7f040009;
         public static final int riddle2=0x7f04000c;
@@ -192,7 +193,7 @@ containing a value of this type.
         public static final int satellite=0x7f040002;
         public static final int skipButton=0x7f040022;
         public static final int spinner1=0x7f040017;
-        public static final int splashscreen=0x7f040036;
+        public static final int splashscreen=0x7f040037;
         public static final int terrain=0x7f040003;
         public static final int textView0=0x7f040005;
         public static final int textView1=0x7f040007;
@@ -200,7 +201,7 @@ containing a value of this type.
         public static final int textView3=0x7f04000f;
         public static final int txtHeader=0x7f040025;
         public static final int txtTitle=0x7f040035;
-        public static final int username=0x7f04002d;
+        public static final int username=0x7f04002e;
     }
     public static final class layout {
         public static final int activity_create_riddle=0x7f030000;

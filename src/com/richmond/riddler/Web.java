@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Web {
 
-	public static final String BASE_URL = "http://riddler.aws.af.cm";
+	public static final String BASE_URL = "http://mighty-mountain-1257.herokuapp.com";
 	public static final String POSTRIDDLE = "/riddles";
 	public static final String GETRIDDLES = "/riddles";
 	public static final String GETRIDDLE = "/riddles/";

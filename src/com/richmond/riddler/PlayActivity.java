@@ -22,83 +22,66 @@ import com.richmond.riddler.http.HttpUpdateUserInfo;
 
 public class PlayActivity extends Activity implements OnClickListener {
 
-
-
-	//private String riddleID;
-	private GPSTracker gps;
-	//private int currentRiddle = 1;
-	private RiddleSequence riddles;
-	private Button hintButton, checkButton, skipButton;
-	//private boolean hintWasUsed = false, skipWasUsed = false;
-	private TextView textViewRiddle, textViewHint, textViewTitle;
 	private User mUser;
 	private int listIndex;
-	RiddlesStarted mRiddleStarted;
+	private GPSTracker gps;
+	boolean skippedThisRiddle;
+	private RiddleSequence riddles;
+	private RiddlesStarted mRiddleStarted;
+	private Button hintButton, checkButton, skipButton;
+	private TextView textViewRiddle, textViewHint, textViewTitle;
 
-	// private RiddlesDataSource database = new RiddlesDataSource(this);
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_play);
+		setOnClickListenerForButtons();
+		setupCurrentRiddle();
+		RiddleTextView();
+		skippedThisRiddle = false;
+		if (mRiddleStarted.isSkip())
+			DisableSkip();
 
-		mUser = new User();
-		Intent intent = getIntent();
-		String riddleID = intent.getStringExtra(MyAdapter.RIDDLES_ID);
-		int currentRiddle = intent.getIntExtra(MyAdapter.CURRENT_RIDDLE, -1);
-		boolean skipWasUsed = intent.getBooleanExtra(MyAdapter.SKIP_USED, false);
-		boolean hintWasUsed = false;
+		if(mRiddleStarted.isHint()){
+			hint();
+		}
+	}
 
+	
+	private void setOnClickListenerForButtons() {
+		hintButton = (Button) findViewById(R.id.hintButton);
+		checkButton = (Button) findViewById(R.id.checkButton);
+		skipButton = (Button) findViewById(R.id.skipButton);
+
+		hintButton.setOnClickListener(this);
+		checkButton.setOnClickListener(this);
+		skipButton.setOnClickListener(this);
+	}
+
+
+	private void setupCurrentRiddle() {
+		// initializes variables
 		listIndex = -1;
-		mUser = (User) mUser.loadSerializedObject();
+		mUser = new User();
+
+		// gets intent info
+		String riddleID = getIntent().getStringExtra(MyAdapter.RIDDLES_ID);
+
+
+		// gets current user info
+		mUser.loadSerializedObject();
 		Log.i("user", mUser.toString());
-		List<RiddlesStarted> started = new ArrayList<RiddlesStarted>();
-		started = mUser.getRiddlesStarted();
-		mRiddleStarted = new RiddlesStarted(riddleID,
-				currentRiddle, hintWasUsed, skipWasUsed);
-		
 
+		// 
+		int currentRiddle = getIntent().getIntExtra(MyAdapter.CURRENT_RIDDLE, -1);
+		boolean intentSkip = getIntent().getBooleanExtra(MyAdapter.SKIP_USED, false);
+		mRiddleStarted = new RiddlesStarted(riddleID, currentRiddle , false, intentSkip);
 		
-		if (mRiddleStarted.getCurrentRiddle() == 3){
-			if ((listIndex = mRiddleStarted.isIn(started)) != -1) {
-				if (started.get(listIndex).getCurrentRiddle() == 2){
-					mUser.getRiddlesStarted().remove(listIndex);
-					mUser.getRiddlesStarted().add(mRiddleStarted);
-					HttpUpdateUserInfo updateInfo = new HttpUpdateUserInfo(
-							mRiddleStarted,
-							(Web.BASE_URL + Web.UPDATEUSER + Web.RIDDLESSTARTED
-									+ "/" + mUser.getUserName()), 0);
-					updateInfo.execute();
-				}
-			}
-		}
-		if (mRiddleStarted.getCurrentRiddle() == 2){
-			if ((listIndex = mRiddleStarted.isIn(started)) != -1) {
-				if (started.get(listIndex).getCurrentRiddle() == 1){
-					mUser.getRiddlesStarted().remove(listIndex);
-					mUser.getRiddlesStarted().add(mRiddleStarted);
-					HttpUpdateUserInfo updateInfo = new HttpUpdateUserInfo(
-							mRiddleStarted,
-							(Web.BASE_URL + Web.UPDATEUSER + Web.RIDDLESSTARTED
-									+ "/" + mUser.getUserName()), 0);
-					updateInfo.execute();
-				}
-			}
-		}
-		if (mRiddleStarted.getCurrentRiddle() == 1) {
-			if ((listIndex = mRiddleStarted.isIn(started)) != -1) {
-				mRiddleStarted = started.get(listIndex);
-			} else {
-				mUser.getRiddlesStarted().add(mRiddleStarted);
-				HttpUpdateUserInfo updateInfo = new HttpUpdateUserInfo(
-						mRiddleStarted,
-						(Web.BASE_URL + Web.UPDATEUSER + Web.RIDDLESSTARTED
-								+ "/" + mUser.getUserName()), 0);
-				updateInfo.execute();
-			}
-		}
-
-		mUser.saveUser();
+		// get and set current riddle info
+		handleCurrentRiddle();
+		
+		// gets riddle info
 		HttpGetRiddleFromId response = new HttpGetRiddleFromId(riddleID);
 		response.execute();
 		try {
@@ -111,43 +94,49 @@ public class PlayActivity extends Activity implements OnClickListener {
 			e.printStackTrace();
 		}
 
-		hintButton = (Button) findViewById(R.id.hintButton);
-		checkButton = (Button) findViewById(R.id.checkButton);
-		skipButton = (Button) findViewById(R.id.skipButton);
 
-		hintButton.setOnClickListener(this);
-		checkButton.setOnClickListener(this);
-		skipButton.setOnClickListener(this);
-
-		if (skipWasUsed)
-			DisableSkip();
-
-		if(mRiddleStarted.isHint()){
-			hint();
+		
+	}
+	
+	private void handleCurrentRiddle() {
+		int currentRiddle = getIntent().getIntExtra(MyAdapter.CURRENT_RIDDLE, -1);
+		List<RiddlesStarted> started = mUser.getRiddlesStarted();
+		if ((listIndex = mRiddleStarted.isIn(started)) != -1) {
+			if(currentRiddle <= started.get(listIndex).getCurrentRiddle())
+				mRiddleStarted = started.get(listIndex);
+			else
+				updateUserInfo();
 		}
+		else
+			addRiddleToRiddlesStarted();
+		
+		mUser.saveUser();
+		listIndex = mRiddleStarted.isIn(started);
+	}
 
-		RiddleTextView();
+	private void addRiddleToRiddlesStarted() {
+		mUser.getRiddlesStarted().add(mRiddleStarted);
+		HttpUpdateUserInfo updateInfo = new HttpUpdateUserInfo(
+				mRiddleStarted,
+				(Web.BASE_URL + Web.UPDATEUSER + Web.RIDDLESSTARTED
+						+ "/" + mUser.getUserName()), 0);
+		updateInfo.execute();
+	}
+
+
+	private void updateUserInfo() {
+		mUser.getRiddlesStarted().remove(listIndex);
+		mUser.getRiddlesStarted().add(mRiddleStarted);
+		HttpUpdateUserInfo updateInfo = new HttpUpdateUserInfo(
+				mRiddleStarted,
+				(Web.BASE_URL + Web.UPDATEUSER + Web.RIDDLESSTARTED
+						+ "/" + mUser.getUserName()), 0);
+		updateInfo.execute();
+		
 	}
 
 	private void DisableSkip() {
 		skipButton.setEnabled(false);
-	}
-
-	@Override
-	public void onSaveInstanceState(Bundle savedInstanceState) {
-		super.onSaveInstanceState(savedInstanceState);
-
-		savedInstanceState.putBoolean("Hint_Shows", mRiddleStarted.isHint());
-
-	}
-
-	@Override
-	public void onRestoreInstanceState(Bundle savedInstanceState) {
-		super.onRestoreInstanceState(savedInstanceState);
-
-		mRiddleStarted.setHint(savedInstanceState.getBoolean("Hint_Shows"));
-		if (mRiddleStarted.isHint());
-			hint();
 	}
 
 	private void RiddleTextView() {
@@ -203,8 +192,7 @@ public class PlayActivity extends Activity implements OnClickListener {
 				riddlelocationLat = riddles.getRiddlethreelocationLat();
 				break;
 			}
-			// Log.e("locatoin" , riddlelocationstring[0] +
-			// riddlelocationstring[1]);
+
 
 			// Tolerance
 			if (DistanceBetweenTwo(latitude, longitude, riddlelocationLong,
@@ -233,16 +221,7 @@ public class PlayActivity extends Activity implements OnClickListener {
 				+ " of 3");
 
 		// add points
-
-		int points = 2;
-		if (mRiddleStarted.isSkip())
-			points = 0;
-		if (mRiddleStarted.isHint())
-			points = 1;
-		mUser.setPoints(mUser.getPoints() + points);
-		mUser.saveUser();
-		HttpRequests response = new HttpRequests(points);
-		response.execute();
+		addPoints();
 
 		// on pressing cancel button
 		alertDialog.setNegativeButton("COOL",
@@ -258,7 +237,22 @@ public class PlayActivity extends Activity implements OnClickListener {
 
 	}
 
+	private void addPoints() {
+		int points = 2;
+		if (mRiddleStarted.isHint())
+			points = 1;
+		if (skippedThisRiddle)
+			points = 0;
+		mUser.setPoints(mUser.getPoints() + points);
+		mUser.saveUser();
+		HttpRequests response = new HttpRequests(points);
+		response.execute();
+	}
+
+
 	private void AlertUserOfFinishedSequence() {
+		
+		addPoints();
 		AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
 
 		// Setting Dialog Title
@@ -284,8 +278,6 @@ public class PlayActivity extends Activity implements OnClickListener {
 	private void nextRiddle() {
 		Intent intent = new Intent(this, PlayActivity.class);
 		intent.putExtra(MyAdapter.RIDDLES_ID, mRiddleStarted.getId());
-		//mRiddleStarted.setCurrentRiddle(mRiddleStarted.getCurrentRiddle()+1);
-		//Log.i("current riddle", "" + currentRiddle);
 		intent.putExtra(MyAdapter.CURRENT_RIDDLE, mRiddleStarted.getCurrentRiddle()+1);
 		intent.putExtra(MyAdapter.SKIP_USED, mRiddleStarted.isSkip());
 		startActivity(intent);
@@ -307,6 +299,7 @@ public class PlayActivity extends Activity implements OnClickListener {
 	}
 
 	private void skip() {
+		skippedThisRiddle = true;
 		AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
 
 		// Setting Dialog Title
@@ -347,6 +340,7 @@ public class PlayActivity extends Activity implements OnClickListener {
 
 		// Showing Alert Message
 		alertDialog.show();
+		mUser.saveUser();
 
 	}
 
@@ -427,15 +421,13 @@ public class PlayActivity extends Activity implements OnClickListener {
 	
 	@Override
 	public void onBackPressed() {
-		// TODO Auto-generated method stub
 		super.onBackPressed();
 		if ((listIndex = mRiddleStarted.isIn(mUser.getRiddlesStarted())) != -1) {
 				mUser.getRiddlesStarted().remove(listIndex);
 				mUser.getRiddlesStarted().add(mRiddleStarted);
-			
 		}
 		mUser.saveUser();
-		
+		updateUserInfo();
 	}
 	
 
