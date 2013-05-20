@@ -100,7 +100,8 @@ public class User implements Serializable {
 				data = info.getJSONObject(i);
 				RiddlesStarted started = new RiddlesStarted(
 						data.getString(Web.ID), data.getInt(Web.CURRENTRIDDLE),
-						data.getBoolean(Web.HINTS), data.getBoolean(Web.SKIPS));
+						data.getBoolean(Web.HINTS), data.getBoolean(Web.SKIPS), data.getBoolean(Web.FINISHEDWITHSKIP), 
+						data.getBoolean(Web.FINISHEDWITHOUTSKIP));
 				this.riddlesStarted.add(started);
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block

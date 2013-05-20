@@ -7,8 +7,24 @@ public class RiddlesStarted implements Serializable{
 	@Override
 	public String toString() {
 		return "RiddlesStarted [id=" + id + ", currentRiddle=" + currentRiddle
-				+ ", hint=" + hint + ", skip=" + skip + "]";
+				+ ", hint=" + hint + ", skip=" + skip + ", finishedWithSkip="
+				+ finishedWithSkip + ", finishedWithoutSkip="
+				+ finishedWithoutSkip + "]";
 	}
+	public boolean isFinishedWithSkip() {
+		return finishedWithSkip;
+	}
+	public void setFinishedWithSkip(boolean finishedWithSkip) {
+		this.finishedWithSkip = finishedWithSkip;
+	}
+	public boolean isFinishedWithoutSkip() {
+		return finishedWithoutSkip;
+	}
+	public void setFinishedWithoutSkip(boolean finishedWithoutSkip) {
+		this.finishedWithoutSkip = finishedWithoutSkip;
+	}
+	
+
 
 	/**
 	 * 
@@ -18,15 +34,19 @@ public class RiddlesStarted implements Serializable{
 	private int currentRiddle;
 	private boolean hint;
 	private boolean skip;
+	private boolean finishedWithSkip;
+	private boolean finishedWithoutSkip;
 	
 	
 	public RiddlesStarted(String id, int currentRiddle, boolean hint,
-			boolean skip) {
+			boolean skip, boolean finWSkip, boolean finWoutSkip) {
 		super();
 		this.id = id;
 		this.currentRiddle = currentRiddle;
 		this.hint = hint;
 		this.skip = skip;
+		this.finishedWithoutSkip = finWoutSkip;
+		this.finishedWithSkip = finWSkip;
 	}
 	public String getId() {
 		return id;

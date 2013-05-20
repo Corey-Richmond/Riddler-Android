@@ -45,5 +45,7 @@ public class Web {
 	public static final String RIDDLES = "riddles";
 	public static final String HINTS = "hints";
 	public static final String SKIPS = "skips";
+	public static final String FINISHEDWITHSKIP = "finishedwithskip";
+	public static final String FINISHEDWITHOUTSKIP = "finishedwithoutskip";
 	
 }

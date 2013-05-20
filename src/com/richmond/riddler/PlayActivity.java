@@ -76,7 +76,7 @@ public class PlayActivity extends Activity implements OnClickListener {
 		// 
 		int currentRiddle = getIntent().getIntExtra(MyAdapter.CURRENT_RIDDLE, -1);
 		boolean intentSkip = getIntent().getBooleanExtra(MyAdapter.SKIP_USED, false);
-		mRiddleStarted = new RiddlesStarted(riddleID, currentRiddle , false, intentSkip);
+		mRiddleStarted = new RiddlesStarted(riddleID, currentRiddle , false, intentSkip, false, false);
 		
 		// get and set current riddle info
 		handleCurrentRiddle();
@@ -253,6 +253,11 @@ public class PlayActivity extends Activity implements OnClickListener {
 	private void AlertUserOfFinishedSequence() {
 		
 		addPoints();
+		if(mRiddleStarted.isSkip())
+			mRiddleStarted.setFinishedWithSkip(true);
+		else
+			mRiddleStarted.setFinishedWithoutSkip(true);
+		updateUserInfo();
 		AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
 
 		// Setting Dialog Title
@@ -333,7 +338,10 @@ public class PlayActivity extends Activity implements OnClickListener {
 						 * 
 						 * 
 						 */
-						nextRiddle();
+						if(mRiddleStarted.getCurrentRiddle() == 3)
+							AlertUserOfFinishedSequence();	
+						else
+							nextRiddle();	
 						dialog.cancel();
 					}
 				});

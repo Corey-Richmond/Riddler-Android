@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.opengl.Visibility;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,6 +57,7 @@ public class MyAdapter extends ArrayAdapter<RiddleSequence> {
             holder.currentRiddle  = (TextView)row.findViewById(R.id.currentRiddle);
             holder.txtTitle = (TextView)row.findViewById(R.id.txtTitle);
             holder.count    = (TextView)row.findViewById(R.id.count);
+            holder.medal = (ImageView)row.findViewById(R.id.medal);
             
             row.setTag(holder);
             Log.i("ROW_NUMBER", rowNumber+"");
@@ -81,12 +83,30 @@ public class MyAdapter extends ArrayAdapter<RiddleSequence> {
         RiddleSequence riddles = data.get(position);
         holder.count.setText((position+1)+"");
         holder.txtTitle.setText(riddles.getRiddletitle());
-        RiddlesStarted started = new RiddlesStarted(riddles.getId(), 0, false, false);
+        RiddlesStarted started = new RiddlesStarted(riddles.getId(), 0, false, false, false, false);
         int index;
-        if( (index = started.isIn(mUser.getRiddlesStarted())) != -1)
-        	holder.currentRiddle.setText(mUser.getRiddlesStarted().get(index).getCurrentRiddle()+"");
+        if( (index = started.isIn(mUser.getRiddlesStarted())) != -1){
+        	int curRid = mUser.getRiddlesStarted().get(index).getCurrentRiddle();
+        	if(curRid == 3){
+        		if(mUser.getRiddlesStarted().get(index).isFinishedWithoutSkip()){
+        			holder.currentRiddle.setVisibility(View.GONE);
+        			holder.medal.setVisibility(View.VISIBLE);
+                	row.setClickable(false);
+        		}
+        		if(mUser.getRiddlesStarted().get(index).isFinishedWithSkip()){
+        			holder.currentRiddle.setVisibility(View.GONE);
+        			holder.medal.setImageResource(R.drawable.gold_medal_skip);
+        			holder.medal.setVisibility(View.VISIBLE);
+                	row.setClickable(false);
+        		}
+        		else
+        			holder.currentRiddle.setText(curRid+"");
+        		
+        	}
+        	else
+    			holder.currentRiddle.setText(curRid+"");
 
-
+        }
         
         
         if(position % 2 == 0){
@@ -99,7 +119,7 @@ public class MyAdapter extends ArrayAdapter<RiddleSequence> {
         	row.setBackgroundDrawable(gd);
         }
         
-        if(riddles.getCreatedby().equals(AbstractGetNameTask.getmEmailAddress())){
+        if(riddles.getCreatedby().equals(mUser.getUserName())){
         	row.setBackgroundColor(Color.YELLOW);
         	row.setClickable(false);
         }
@@ -111,6 +131,7 @@ public class MyAdapter extends ArrayAdapter<RiddleSequence> {
     	TextView count;
     	TextView currentRiddle;
         TextView txtTitle;
+        ImageView medal;
     }
     
 

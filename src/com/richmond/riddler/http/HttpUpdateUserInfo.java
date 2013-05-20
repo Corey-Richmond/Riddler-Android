@@ -57,6 +57,8 @@ public class HttpUpdateUserInfo extends AsyncTask<Void, Void, Void> {
 				info.put(Web.CURRENTRIDDLE, mRiddleStarted.getCurrentRiddle());
 				info.put(Web.HINTS, mRiddleStarted.isHint());
 				info.put(Web.SKIPS, mRiddleStarted.isSkip());
+				info.put(Web.FINISHEDWITHSKIP, mRiddleStarted.isFinishedWithSkip());
+				info.put(Web.FINISHEDWITHOUTSKIP, mRiddleStarted.isFinishedWithoutSkip());
 				Log.i("JSON", json.toString());
 				json.put(Web.RIDDLESSTARTED, info );
 				StringEntity se = new StringEntity(json.toString());
