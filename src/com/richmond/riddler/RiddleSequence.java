@@ -56,6 +56,10 @@ public class RiddleSequence {
 		distance = aDistance;
 		createdby = aCreatedBy;
 	}
+	
+	public RiddleSequence(){
+		
+	}
 
 	public String getId() {
 		return id;

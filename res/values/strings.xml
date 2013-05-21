@@ -29,7 +29,7 @@
     <string name="title_activity_create_riddle">CreateRiddleActivity</string>
     <string name="firstriddle">First Riddle</string>
     <string name="hint">Hint</string>
-    <string name="location">Pin</string>
+    <string name="location">Pin Answer</string>
     <string name="secondriddle">Second Riddle</string>
     <string name="thirdriddle">Third Riddle</string>
     <string name="createriddlebutton">Create Riddle</string>

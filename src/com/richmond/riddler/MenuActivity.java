@@ -1,21 +1,16 @@
 package com.richmond.riddler;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
-
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.MenuItem;
 import com.richmond.riddler.http.HttpGetUserInfo;
 
-public class MenuActivity extends Activity implements OnClickListener {
+public class MenuActivity extends SherlockActivity implements OnClickListener {
 
 	private Button profileButton, 
 				   createRiddleButton, 
@@ -33,21 +28,28 @@ public class MenuActivity extends Activity implements OnClickListener {
         profileButton.setOnClickListener(this);
         createRiddleButton.setOnClickListener(this);
         riddlesButton.setOnClickListener(this);
+        
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
              
     	HttpGetUserInfo info = new HttpGetUserInfo(this);
     	info.execute(getIntent().getStringExtra(Web.USERNAME));
 
 
     }
-
-    
-
-    
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_menu, menu);
-        return true;
+    public boolean onOptionsItemSelected(MenuItem item) {
+      switch (item.getItemId()) {
+        case android.R.id.home:
+            Intent intent = new Intent(this, LogonActivity.class);            
+            intent.addFlags(Intent.FLAG_ACTIVITY_TASK_ON_HOME); 
+            startActivity(intent); 
+          return(true);
+      }
+      // more code here for other cases
+      return false;
     }
+  
     
 	public void onClick(View v) {
 		switch(v.getId()) {

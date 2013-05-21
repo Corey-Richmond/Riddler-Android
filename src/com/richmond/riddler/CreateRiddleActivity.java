@@ -1,12 +1,12 @@
 package com.richmond.riddler;
 
-import com.richmond.riddler.http.HttpPostRiddle;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -14,7 +14,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class CreateRiddleActivity extends Activity implements OnClickListener {
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.ActionBar.Tab;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.richmond.riddler.CreateRiddleFragment.onFinishedRiddleListener;
+import com.richmond.riddler.CreateRiddleSubmitFragment.onFinishedRiddleSequenceListener;
+import com.richmond.riddler.http.HttpPostRiddle;
+
+public class CreateRiddleActivity extends SherlockFragmentActivity implements onFinishedRiddleListener, onFinishedRiddleSequenceListener{
 
 	private AlertDialog mAlertDialog;
 	public static final int DIALOG_CREATE_RIDDLE_FAILURE = 1;
@@ -27,147 +34,129 @@ public class CreateRiddleActivity extends Activity implements OnClickListener {
 	public final static String DISTANCE = "com.richmond.riddler.DISTANCE";
 	public final static String LOCATION = "com.richmond.riddler.LOCATION";
 
-	private Button doneButton, pinRiddleOne, pinRiddleTwo, pinRiddleThree;
-	private EditText riddle1, riddle2, riddle3, riddleTitle, riddle1hint,
+
+	private String riddle1, riddle2, riddle3, riddleTitle, riddle1hint,
 			riddle2hint, riddle3hint;
 	private double lat1, longi1, lat2, longi2, lat3, longi3, distance;
+	private ActionBar actionBar;
+	RiddleSequence riddles;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_create_riddle);
+		setContentView(R.layout.create_riddle_main);
+		
+		actionBar = getSupportActionBar();
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+		actionBar.setTitle("Create Riddles");
+		
+		ActionBar.Tab Riddle1Tab = actionBar.newTab().setText("Riddle 1");
+		ActionBar.Tab Riddle2Tab = actionBar.newTab().setText("Riddle 2");
+		ActionBar.Tab Riddle3Tab = actionBar.newTab().setText("Riddle 3");
+		
+		Fragment frag1 = new CreateRiddleFragment(1);
+		Fragment frag2 = new CreateRiddleFragment(2);
+		Fragment frag3 = new CreateRiddleFragment(3);
+		
+		Riddle1Tab.setTabListener(new MyTabListener(frag1));
+		Riddle2Tab.setTabListener(new MyTabListener(frag2));
+		Riddle3Tab.setTabListener(new MyTabListener(frag3));
+		
+		actionBar.addTab(Riddle1Tab);
+		actionBar.addTab(Riddle2Tab);
+		actionBar.addTab(Riddle3Tab);
+		
+		riddles = new RiddleSequence();
+		
+	
 
-		doneButton = (Button) findViewById(R.id.donebutton);
-		pinRiddleOne = (Button) findViewById(R.id.pinfirstriddle);
-		pinRiddleTwo = (Button) findViewById(R.id.pinsecondriddle);
-		pinRiddleThree = (Button) findViewById(R.id.pinthirdriddle);
-
-		riddle1 = (EditText) findViewById(R.id.riddle1);
-		riddle2 = (EditText) findViewById(R.id.riddle2);
-		riddle3 = (EditText) findViewById(R.id.riddle3);
-		riddle1hint = (EditText) findViewById(R.id.riddle1hint);
-		riddle2hint = (EditText) findViewById(R.id.riddle2hint);
-		riddle3hint = (EditText) findViewById(R.id.riddle3hint);
-		riddleTitle = (EditText) findViewById(R.id.riddletitle);
-
-		doneButton.setOnClickListener(this);
-		pinRiddleOne.setOnClickListener(this);
-		pinRiddleTwo.setOnClickListener(this);
-		pinRiddleThree.setOnClickListener(this);
-
-	}
-
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.donebutton:
-			AddRiddleSequence(v);
-			break;
-		case R.id.pinfirstriddle:
-			LaunchMapView(v, 1);
-			break;
-		case R.id.pinsecondriddle:
-			LaunchMapView(v, 2);
-			break;
-		case R.id.pinthirdriddle:
-			LaunchMapView(v, 3);
-			break;
-
-		}
-	}
-
-	private void LaunchMapView(View v, int riddleNumber) {
-		Intent intent = new Intent(this, LocationSelectionActivity.class);
-		startActivityForResult(intent, riddleNumber);
-	}
-
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-		if (requestCode == 1) {
-			if (resultCode == RESULT_OK)
-				longi1 = data.getDoubleExtra("resultLongitude", 1);
-			lat1 = data.getDoubleExtra("resultLatitude", 1);
-			Toast t = Toast.makeText(getBaseContext(), "longi " + longi1
-					+ "lat " + lat1, Toast.LENGTH_LONG);
-			t.show();
-		}
-		if (requestCode == 2) {
-			if (resultCode == RESULT_OK)
-				longi2 = data.getDoubleExtra("resultLongitude", 2);
-			lat2 = data.getDoubleExtra("resultLatitude", 2);
-			Toast t = Toast.makeText(getBaseContext(), "longi " + longi2
-					+ "lat " + lat2, Toast.LENGTH_LONG);
-			t.show();
-		}
-		if (requestCode == 3) {
-			if (resultCode == RESULT_OK)
-				longi3 = data.getDoubleExtra("resultLongitude", 3);
-			lat3 = data.getDoubleExtra("resultLatitude", 3);
-			Toast t = Toast.makeText(getBaseContext(), "longi " + longi3
-					+ "lat " + lat3, Toast.LENGTH_LONG);
-			t.show();
-		}
-
-		if (resultCode == RESULT_CANCELED) {
-
-			// Write your code on no result return
-
-		}
-	}// onAcrivityResult
-
-	private void AddRiddleSequence(View v) {
-		if (validateFields()) {
-			
-			double[] locations = { lat1,longi1,lat2,longi2,lat3,longi3};
-			CalculateTotalDistance(locations);
-			RiddleSequence riddles = new RiddleSequence("", riddleTitle.getText()
-					.toString(), riddle1.getText().toString(), riddle2
-					.getText().toString(), riddle3.getText().toString(),
-					riddle1hint.getText().toString(), riddle2hint.getText()
-							.toString(), riddle3hint.getText().toString(),
-					longi1, lat1, longi2, lat2, longi3, lat3, distance, AbstractGetNameTask.getmEmailAddress());
-			
-	        HttpPostRiddle post = new HttpPostRiddle(this, riddles);
-	        post.execute();
-		}
 	}
 	
-	@SuppressWarnings("deprecation")
-	private boolean validateFields() {
-		if (!validateTitle()) {
-			showDialog(DIALOG_TITLE_ERROR);
-		} else if (!validateRiddles()) {
-			showDialog(DIALOG_RIDDLE_ERROR);
-		} else if (!validateHints()) {
-			showDialog(DIALOG_HINT_ERROR);
-		} else if (!validateLocations()) {
-			showDialog(DIALOG_LOCATION_ERROR);
-		} else {
-			return true;
+	
+	class MyTabListener implements ActionBar.TabListener{
+		public Fragment fragment;
+		
+		public MyTabListener( Fragment fragment){
+			this.fragment = fragment;
 		}
-		return false;
+
+		@Override
+		public void onTabSelected(Tab tab, FragmentTransaction ft) {
+			// TODO Auto-generated method stub
+			ft.replace(R.id.fragment_container, fragment);
+			
+		}
+
+		@Override
+		public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onTabReselected(Tab tab, FragmentTransaction ft) {
+			// TODO Auto-generated method stub
+			
+		}
+		
 	}
 
-	private boolean validateTitle() {
-		return (riddleTitle.getText().toString().length() != 0);
-	}
 
-	private boolean validateRiddles() {
-		Log.i("riddle1_text", riddle1.getText().toString());
-		return (riddle1.getText().toString().length() != 0
-				&& riddle2.getText().toString().length() != 0 && riddle3
-				.getText().toString().length() != 0);
-	}
+	
+//	private void AddRiddleSequence(View v) {
+//		if (validateFields()) {
+//			
+//			double[] locations = { lat1,longi1,lat2,longi2,lat3,longi3};
+//			CalculateTotalDistance(locations);
+//			RiddleSequence riddles = new RiddleSequence("", riddleTitle.getText()
+//					.toString(), riddle1.getText().toString(), riddle2
+//					.getText().toString(), riddle3.getText().toString(),
+//					riddle1hint.getText().toString(), riddle2hint.getText()
+//							.toString(), riddle3hint.getText().toString(),
+//					longi1, lat1, longi2, lat2, longi3, lat3, distance, AbstractGetNameTask.getmEmailAddress());
+//			
+//	        HttpPostRiddle post = new HttpPostRiddle(this, riddles);
+//	        post.execute();
+//		}
+//	}
+	
+//	@SuppressWarnings("deprecation")
+//	private boolean validateFields() {
+//		if (!validateTitle()) {
+//			showDialog(DIALOG_TITLE_ERROR);
+//		} else if (!validateRiddles()) {
+//			showDialog(DIALOG_RIDDLE_ERROR);
+//		} else if (!validateHints()) {
+//			showDialog(DIALOG_HINT_ERROR);
+//		} else if (!validateLocations()) {
+//			showDialog(DIALOG_LOCATION_ERROR);
+//		} else {
+//			return true;
+//		}
+//		return false;
+//	}
 
-	private boolean validateHints() {
-		return (riddle1hint.getText().toString().length() != 0
-				&& riddle2hint.getText().toString().length() != 0 && riddle3hint
-				.getText().toString().length() != 0);
-	}
-
-	private boolean validateLocations() {
-		return (lat1 != 0 && longi1 != 0 && lat2 != 0 && longi2 != 0
-				&& lat3 != 0 && longi3 != 0);
-	}
+//	private boolean validateTitle() {
+//		return (riddleTitle.getText().toString().length() != 0);
+//	}
+//
+//	private boolean validateRiddles() {
+//		Log.i("riddle1_text", riddle1.getText().toString());
+//		return (riddle1.getText().toString().length() != 0
+//				&& riddle2.getText().toString().length() != 0 && riddle3
+//				.getText().toString().length() != 0);
+//	}
+//
+//	private boolean validateHints() {
+//		return (riddle1hint.getText().toString().length() != 0
+//				&& riddle2hint.getText().toString().length() != 0 && riddle3hint
+//				.getText().toString().length() != 0);
+//	}
+//
+//	private boolean validateLocations() {
+//		return (lat1 != 0 && longi1 != 0 && lat2 != 0 && longi2 != 0
+//				&& lat3 != 0 && longi3 != 0);
+//	}
 
 	private void CalculateTotalDistance(double[] locations) {
 		distance = (DistanceBetweenTwo(locations[0], locations[1],
@@ -216,6 +205,62 @@ public class CreateRiddleActivity extends Activity implements OnClickListener {
 				.create();
 
 		return mAlertDialog;
+	}
+
+	@Override
+	public void onFinishedRiddle(int riddleNumber, String riddle, String hint, double longi, double lat) {
+
+		if(riddleNumber == 1){
+			riddles.setRiddleone(riddle);
+			riddles.setRiddleonehint(hint);
+			riddles.setRiddleonelocationLong(longi);
+			riddles.setRiddleonelocationLat(lat);
+		}
+		if(riddleNumber == 2){
+			riddles.setRiddletwo(riddle);
+			riddles.setRiddletwohint(hint);
+			riddles.setRiddletwolocationLong(longi);
+			riddles.setRiddletwolocationLat(lat);
+		}
+		if(riddleNumber == 3){
+			riddles.setRiddlethree(riddle);
+			riddles.setRiddlethreehint(hint);
+			riddles.setRiddlethreelocationLong(longi);
+			riddles.setRiddlethreelocationLat(lat);
+		}
+		
+		if(actionBar.getTabCount() != 1)
+			actionBar.removeTab(actionBar.getSelectedTab());
+		else{
+			ActionBar.Tab Riddle1Tab = actionBar.newTab().setText("Title And Submit");
+			
+			Fragment frag1 = new CreateRiddleSubmitFragment();
+		
+			Riddle1Tab.setTabListener(new MyTabListener(frag1));
+			
+			actionBar.addTab(Riddle1Tab);
+			actionBar.removeTab(actionBar.getSelectedTab());
+			double[] locations = { riddles.getRiddleonelocationLat(),riddles.getRiddleonelocationLong(),
+					riddles.getRiddletwolocationLat(),riddles.getRiddletwolocationLong(),
+					riddles.getRiddlethreelocationLat(),riddles.getRiddlethreelocationLong()};
+			CalculateTotalDistance(locations);
+			riddles.setDistance(distance);
+		}
+				
+			
+		
+	}
+
+
+	@Override
+	public void onFinishedRiddleSequence(String title) {
+		riddles.setId("");
+		riddles.setRiddletitle(title);
+		riddles.setCreatedby(AbstractGetNameTask.getmEmailAddress());
+
+		HttpPostRiddle post = new HttpPostRiddle(this, riddles);
+		post.execute();
+		
 	}
 
 }
