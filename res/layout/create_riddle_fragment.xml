@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+	    <EditText
+	        android:id="@+id/riddle1"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:inputType="textMultiLine"
+    		android:scrollHorizontally="false" 
+	        android:lines="5"
+	        android:hint="@string/firstriddle"
+	        android:gravity="top|left"
+	        android:textColorHint="@color/abs__bright_foreground_holo_dark"
+		/>
+	    <EditText
+	        android:id="@+id/riddle1hint"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:hint="@string/hint"
+	        android:inputType="textMultiLine"
+    		android:scrollHorizontally="false" 
+	        android:lines="5"
+	        android:gravity="top|left"
+	        android:textColorHint="@color/abs__bright_foreground_holo_dark"
+		/>
+	
+	    <Button 
+	        android:id="@+id/pinfirstriddle"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/location"
+	    />
+	    
+	   	<Button 
+	        android:id="@+id/donebutton"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/done"
+	    />
+	    
+
+</LinearLayout>

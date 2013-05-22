@@ -16,19 +16,19 @@
 
 package com.richmond.riddler;
 
-import com.google.android.gms.auth.GoogleAuthUtil;
-
-import android.os.AsyncTask;
-import android.util.Log;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.os.AsyncTask;
+import android.util.Log;
+
+import com.google.android.gms.auth.GoogleAuthUtil;
 
 /**
  * Display personalized greeting. This class contains boilerplate code to consume the token but

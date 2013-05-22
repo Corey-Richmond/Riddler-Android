@@ -1,11 +1,8 @@
 package com.richmond.riddler;
 
-import com.richmond.riddler.http.HttpGetUserInfo;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.widget.TextView;
 
 public class ProfileActivity extends Activity {

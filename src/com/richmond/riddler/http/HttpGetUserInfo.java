@@ -11,16 +11,13 @@ import org.apache.http.params.HttpConnectionParams;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import com.richmond.riddler.MenuActivity;
-import com.richmond.riddler.ProfileActivity;
-import com.richmond.riddler.User;
-import com.richmond.riddler.Web;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
+
+import com.richmond.riddler.User;
+import com.richmond.riddler.Web;
 
 public class HttpGetUserInfo extends AsyncTask<String, Void, Void> {
 

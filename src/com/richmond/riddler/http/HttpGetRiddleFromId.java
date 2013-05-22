@@ -10,16 +10,14 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.HttpConnectionParams;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import android.os.AsyncTask;
+
 import com.richmond.riddler.RiddleSequence;
 import com.richmond.riddler.Web;
-
-import android.os.AsyncTask;
-import android.util.Log;
 
 public class HttpGetRiddleFromId extends AsyncTask<Void, Void, RiddleSequence> {
 	String mRiddleID;

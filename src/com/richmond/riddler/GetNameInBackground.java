@@ -16,9 +16,7 @@
 
 package com.richmond.riddler;
 
-import com.google.android.gms.auth.GoogleAuthException;
-import com.google.android.gms.auth.GoogleAuthUtil;
-import com.google.android.gms.auth.UserRecoverableNotifiedException;
+import java.io.IOException;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -26,7 +24,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
-import java.io.IOException;
+import com.google.android.gms.auth.GoogleAuthException;
+import com.google.android.gms.auth.GoogleAuthUtil;
+import com.google.android.gms.auth.UserRecoverableNotifiedException;
 
 /**
  * This example shows how to fetch tokens if you are creating a background task. It also shows how

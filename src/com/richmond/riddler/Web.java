@@ -1,6 +1,5 @@
 package com.richmond.riddler;
 
-import java.util.List;
 
 public class Web {
 

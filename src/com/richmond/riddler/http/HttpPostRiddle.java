@@ -15,19 +15,18 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.protocol.HTTP;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
+
+import android.app.Activity;
+import android.os.AsyncTask;
+import android.widget.Toast;
 
 import com.richmond.riddler.AbstractGetNameTask;
 import com.richmond.riddler.RiddleSequence;
 import com.richmond.riddler.User;
 import com.richmond.riddler.Web;
-
-import android.app.Activity;
-import android.os.AsyncTask;
-import android.util.Log;
 
 public class HttpPostRiddle extends AsyncTask<Void, Void, HttpResponse> {
 	private HttpPost mPost;
@@ -117,6 +116,9 @@ public class HttpPostRiddle extends AsyncTask<Void, Void, HttpResponse> {
 		super.onPostExecute(result);
 		if(result != null)
 			mActivity.finish();
+		else{
+			Toast.makeText(mActivity.getApplicationContext(),"Failed" , Toast.LENGTH_LONG).show();
+		}
 	}
 
 }

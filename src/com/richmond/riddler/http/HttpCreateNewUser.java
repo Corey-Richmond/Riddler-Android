@@ -17,17 +17,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.richmond.riddler.AbstractGetNameTask;
-import com.richmond.riddler.RiddleSequence;
-import com.richmond.riddler.RiddlesStarted;
-import com.richmond.riddler.User;
-import com.richmond.riddler.Web;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
-import android.util.JsonReader;
 import android.util.Log;
+
+import com.richmond.riddler.AbstractGetNameTask;
+import com.richmond.riddler.RiddlesStarted;
+import com.richmond.riddler.User;
+import com.richmond.riddler.Web;
 
 public class HttpCreateNewUser extends AsyncTask<String, Void, Void>{
 	ProgressDialog mDialog;

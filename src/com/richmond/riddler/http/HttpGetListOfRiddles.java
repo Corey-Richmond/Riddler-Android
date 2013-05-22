@@ -2,7 +2,6 @@ package com.richmond.riddler.http;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.io.SequenceInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +15,6 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import android.os.AsyncTask;
-import android.util.JsonReader;
 
 import com.richmond.riddler.RiddleSequence;
 import com.richmond.riddler.Web;

@@ -13,7 +13,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.GoogleAuthUtil;
-import com.richmond.riddler.http.HttpGetUserInfo;
+
+
 
 public class LogonActivity extends Activity {
 	
@@ -48,6 +49,7 @@ public class LogonActivity extends Activity {
         mAccountTypesSpinner = initializeSpinner(
                 R.id.spinner1, mNamesArray);
 
+        CheckForGooglePlayServices cgp = new CheckForGooglePlayServices(this);
         initializeFetchButton();
     }
 

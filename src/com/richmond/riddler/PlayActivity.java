@@ -4,11 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.IntentSender;
+import android.location.Location;
 import android.os.Bundle;
+import android.os.Vibrator;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,11 +23,20 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
+import com.google.android.gms.common.GooglePlayServicesClient.OnConnectionFailedListener;
+import com.google.android.gms.location.Geofence;
+import com.google.android.gms.location.LocationClient;
+import com.google.android.gms.location.LocationClient.OnAddGeofencesResultListener;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
 import com.richmond.riddler.http.HttpGetRiddleFromId;
 import com.richmond.riddler.http.HttpRequests;
 import com.richmond.riddler.http.HttpUpdateUserInfo;
 
-public class PlayActivity extends Activity implements OnClickListener {
+public class PlayActivity extends FragmentActivity implements OnClickListener, ConnectionCallbacks,
+OnConnectionFailedListener, LocationListener, OnAddGeofencesResultListener {
 
 	private User mUser;
 	private int listIndex;
@@ -30,8 +46,37 @@ public class PlayActivity extends Activity implements OnClickListener {
 	private RiddlesStarted mRiddleStarted;
 	private Button hintButton, checkButton, skipButton;
 	private TextView textViewRiddle, textViewHint, textViewTitle;
+	private LocationClient mLocationClient;
+	private Location mCurrentLocation;
+	private LocationRequest mLocationRequest;
+	private Geofence gf;
+	double riddlelocationLong = 0;
+	double riddlelocationLat = 0;
+	private IntentFilter filter;
+
+	public BroadcastReceiver receiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			increaseUpdateLocationRate();
+		    Toast.makeText(context, "YOUR CLOSE... IN GEOFENCE",Toast.LENGTH_LONG).show();
+		        // Vibrate the mobile phone
+		        Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+		        vibrator.vibrate(2000);
+		}
 
 
+	};
+	
+	private void increaseUpdateLocationRate() {
+        mLocationRequest.setPriority(
+                LocationRequest.PRIORITY_HIGH_ACCURACY);
+        // Set the update interval to 15 seconds
+        mLocationRequest.setInterval(5000);
+        // Set the fastest update interval to 1 second
+        mLocationRequest.setFastestInterval(1000);
+        mLocationClient.requestLocationUpdates(mLocationRequest, this );	
+	}
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -39,6 +84,9 @@ public class PlayActivity extends Activity implements OnClickListener {
 		setOnClickListenerForButtons();
 		setupCurrentRiddle();
 		RiddleTextView();
+	
+
+        
 		skippedThisRiddle = false;
 		if (mRiddleStarted.isSkip())
 			DisableSkip();
@@ -46,8 +94,72 @@ public class PlayActivity extends Activity implements OnClickListener {
 		if(mRiddleStarted.isHint()){
 			hint();
 		}
+		
+		getRiddlesLocation();
+
+
+		mLocationClient = new LocationClient(this, this, this);
+		
+		gf = new Geofence.Builder()
+                    .setRequestId("1")
+                    .setTransitionTypes(1)
+                    .setCircularRegion(
+                    		riddlelocationLat, riddlelocationLong, 100)
+                    .setExpirationDuration(-1)
+                    .build();
+		
+		filter = new IntentFilter("Toast");
+		
+	
+	}
+	
+	private void getRiddlesLocation() {
+		switch (mRiddleStarted.getCurrentRiddle()) {
+		case 1:
+			riddlelocationLong = riddles.getRiddleonelocationLong();
+			riddlelocationLat = riddles.getRiddleonelocationLat();
+			break;
+		case 2:
+			riddlelocationLong = riddles.getRiddletwolocationLong();
+			riddlelocationLat = riddles.getRiddletwolocationLat();
+			break;
+		case 3:
+			riddlelocationLong = riddles.getRiddlethreelocationLong();
+			riddlelocationLat = riddles.getRiddlethreelocationLat();
+			break;
+		}
 	}
 
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		this.registerReceiver(receiver, filter);
+	}
+
+	@Override
+	protected void onPause() {
+		this.unregisterReceiver(receiver);
+		updateUserInfo();
+		super.onPause();
+	}
+	
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // Connect the client.
+        mLocationClient.connect();
+        
+    }
+    
+    @Override
+    protected void onStop() {
+        // Disconnecting the client invalidates it.
+        mLocationClient.disconnect();
+        super.onStop();
+    }
+	
 	
 	private void setOnClickListenerForButtons() {
 		hintButton = (Button) findViewById(R.id.hintButton);
@@ -125,14 +237,16 @@ public class PlayActivity extends Activity implements OnClickListener {
 
 
 	private void updateUserInfo() {
-		mUser.getRiddlesStarted().remove(listIndex);
-		mUser.getRiddlesStarted().add(mRiddleStarted);
+		if ((listIndex = mRiddleStarted.isIn(mUser.getRiddlesStarted())) != -1) {
+			mUser.getRiddlesStarted().remove(listIndex);
+			mUser.getRiddlesStarted().add(mRiddleStarted);
+		}
+		mUser.saveUser();
 		HttpUpdateUserInfo updateInfo = new HttpUpdateUserInfo(
 				mRiddleStarted,
 				(Web.BASE_URL + Web.UPDATEUSER + Web.RIDDLESSTARTED
 						+ "/" + mUser.getUserName()), 0);
-		updateInfo.execute();
-		
+		updateInfo.execute();	
 	}
 
 	private void DisableSkip() {
@@ -159,56 +273,7 @@ public class PlayActivity extends Activity implements OnClickListener {
 
 	}
 
-	private void checkForGPS() {
-		// create class object
-		gps = new GPSTracker(this);
-		// gps.getLocation();
-		// check if GPS enabled
-		if (gps.canGetLocation()) {
 
-			double latitude = gps.getLatitude();
-			double longitude = gps.getLongitude();
-
-			// \n is for new line
-			Toast.makeText(
-					getApplicationContext(),
-					"Your Location is - \nLat: " + latitude + "\nLong: "
-							+ longitude, Toast.LENGTH_LONG).show();
-
-			double riddlelocationLong = 0;
-			double riddlelocationLat = 0;
-
-			switch (mRiddleStarted.getCurrentRiddle()) {
-			case 1:
-				riddlelocationLong = riddles.getRiddleonelocationLong();
-				riddlelocationLat = riddles.getRiddleonelocationLat();
-				break;
-			case 2:
-				riddlelocationLong = riddles.getRiddletwolocationLong();
-				riddlelocationLat = riddles.getRiddletwolocationLat();
-				break;
-			case 3:
-				riddlelocationLong = riddles.getRiddlethreelocationLong();
-				riddlelocationLat = riddles.getRiddlethreelocationLat();
-				break;
-			}
-
-
-			// Tolerance
-			if (DistanceBetweenTwo(latitude, longitude, riddlelocationLong,
-					riddlelocationLat) < .09) {
-				if (mRiddleStarted.getCurrentRiddle() == 3) {
-					AlertUserOfFinishedSequence();
-				} else {
-					AlertUserOfNextChallenge();
-				}
-			}
-			gps.stopUsingGPS();
-		} else {
-			gps.showSettingsAlert();
-		}
-
-	}
 
 	private void AlertUserOfNextChallenge() {
 		AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
@@ -327,17 +392,7 @@ public class PlayActivity extends Activity implements OnClickListener {
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
 						mRiddleStarted.setSkip(true);
-						// TODO
-						/*
-						 * 
-						 * http set skip to true
-						 * 
-						 * 
-						 * 
-						 * 
-						 * 
-						 * 
-						 */
+						updateUserInfo();
 						if(mRiddleStarted.getCurrentRiddle() == 3)
 							AlertUserOfFinishedSequence();	
 						else
@@ -353,7 +408,23 @@ public class PlayActivity extends Activity implements OnClickListener {
 	}
 
 	private void checkAnswer() {
-		checkForGPS();
+		mCurrentLocation = mLocationClient.getLastLocation();
+		
+		Toast.makeText(
+				getApplicationContext(),
+				"Your Location is - \nLat: " + mCurrentLocation.getLatitude() + "\nLong: "
+						+ mCurrentLocation.getLongitude(), Toast.LENGTH_LONG).show();
+		
+		getRiddlesLocation();
+		
+		if (DistanceBetweenTwo(mCurrentLocation.getLatitude() ,mCurrentLocation.getLongitude(),
+				riddlelocationLat, riddlelocationLong) < 65) {
+			if (mRiddleStarted.getCurrentRiddle() == 3)
+				AlertUserOfFinishedSequence();
+		    else 
+				AlertUserOfNextChallenge();
+		}
+
 	}
 
 	private void confirmHintAlert() {
@@ -384,15 +455,7 @@ public class PlayActivity extends Activity implements OnClickListener {
 
 	private void hint() {
 		mRiddleStarted.setHint(true);
-		//TODO
-		/*
-		 * 
-		 * 
-		 * http set hint
-		 * 
-		 * 
-		 * 
-		 */
+		updateUserInfo();
 		hintButton.setEnabled(false);
 		textViewHint = (TextView) findViewById(R.id.riddleHintTextView);
 		switch (mRiddleStarted.getCurrentRiddle()) {
@@ -408,6 +471,8 @@ public class PlayActivity extends Activity implements OnClickListener {
 		}
 
 	}
+	
+
 
 	private double DistanceBetweenTwo(double aLat1, double aLong1,
 			double aLat2, double aLongi2) {
@@ -423,19 +488,78 @@ public class PlayActivity extends Activity implements OnClickListener {
 
 		int meterConversion = 1609;
 
-		return (dist * meterConversion) * 0.00062137119; // returns miles
+		return (dist * meterConversion); // returns meters
 
 	}
 	
 	@Override
 	public void onBackPressed() {
 		super.onBackPressed();
-		if ((listIndex = mRiddleStarted.isIn(mUser.getRiddlesStarted())) != -1) {
-				mUser.getRiddlesStarted().remove(listIndex);
-				mUser.getRiddlesStarted().add(mRiddleStarted);
-		}
-		mUser.saveUser();
 		updateUserInfo();
+	}
+
+
+	@Override
+	public void onConnectionFailed(ConnectionResult result) {
+		if (result.hasResolution()) {
+            try {
+                // Start an Activity that tries to resolve the error
+            	result.startResolutionForResult( this, 0);
+            } catch (IntentSender.SendIntentException e) {
+                e.printStackTrace();
+            }
+        } else {
+            //showErrorDialog(result.getErrorCode());
+        	Toast.makeText(this, result.getErrorCode()+"", Toast.LENGTH_SHORT).show();
+        }	
+	}
+
+
+	@Override
+	public void onConnected(Bundle connectionHint) {
+		Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show();
+
+		Intent intent = new Intent("Toast");
+		PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getApplicationContext(), 234324243, intent, 0);
+		List<Geofence> gfs = new ArrayList<Geofence>();
+		gfs.add(gf);
+		mLocationClient.addGeofences(gfs, pendingIntent, this);
+        // Create the LocationRequest object
+        mLocationRequest = LocationRequest.create();
+        // Use high accuracy
+        mLocationRequest.setPriority(
+                LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+        // Set the update interval to 15 seconds
+        mLocationRequest.setInterval(15000);
+        // Set the fastest update interval to 1 second
+        mLocationRequest.setFastestInterval(1000);
+        
+        mLocationClient.requestLocationUpdates(mLocationRequest, this);
+		
+	}
+
+
+	@Override
+	public void onDisconnected() {
+		Toast.makeText(this, "Disconnected. Please re-connect.",
+                Toast.LENGTH_SHORT).show();
+		
+	}
+
+	@Override
+	public void onLocationChanged(Location location) {
+        // Report to the UI that the location was updated
+        String msg = "Updated Location: " +
+                Double.toString(location.getLatitude()) + "," +
+                Double.toString(location.getLongitude());
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+		
+	}
+
+	@Override
+	public void onAddGeofencesResult(int arg0, String[] arg1) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 

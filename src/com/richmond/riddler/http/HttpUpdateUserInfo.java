@@ -15,13 +15,11 @@ import org.apache.http.protocol.HTTP;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.richmond.riddler.AbstractGetNameTask;
-import com.richmond.riddler.RiddleSequence;
-import com.richmond.riddler.RiddlesStarted;
-import com.richmond.riddler.Web;
-
 import android.os.AsyncTask;
 import android.util.Log;
+
+import com.richmond.riddler.RiddlesStarted;
+import com.richmond.riddler.Web;
 
 public class HttpUpdateUserInfo extends AsyncTask<Void, Void, Void> {
 	private String mId;

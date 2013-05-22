@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
-import android.opengl.Visibility;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -75,54 +74,57 @@ public class MyAdapter extends ArrayAdapter<RiddleSequence> {
              }); 
             RiddleSequence riddle = data.get(rowNumber);
             Log.i("Riddle_ID", riddle.getId());
+            holder.count.setText((position+1)+"");
+            holder.txtTitle.setText(riddle.getRiddletitle());
+            RiddlesStarted started = new RiddlesStarted(riddle.getId(), 0, false, false, false, false);
+            int index = -1;
+            if( (index = started.isIn(mUser.getRiddlesStarted())) != -1){
+            	int curRid = mUser.getRiddlesStarted().get(index).getCurrentRiddle();
+            	Log.i("Current Riddle/ id / position ", "" + curRid+" / "+ riddle.getId() +" / "+ position );
+            	if(curRid == 3){
+            		if(mUser.getRiddlesStarted().get(index).isFinishedWithoutSkip()){
+            			holder.currentRiddle.setVisibility(View.GONE);
+            			holder.medal.setVisibility(View.VISIBLE);
+                    	row.setClickable(false);
+            		}
+            		if(mUser.getRiddlesStarted().get(index).isFinishedWithSkip()){
+            			holder.currentRiddle.setVisibility(View.GONE);
+            			holder.medal.setImageResource(R.drawable.gold_medal_skip);
+            			holder.medal.setVisibility(View.VISIBLE);
+                    	row.setClickable(false);
+            		}
+            		else
+            			holder.currentRiddle.setText(curRid+"");
+            		
+            	}
+            	else
+        			holder.currentRiddle.setText(curRid+"");
+
+            }
+            
+            
+            if(position % 2 == 0){
+            	row.setBackgroundColor(Color.WHITE);
+            }else{
+            	   GradientDrawable gd = new GradientDrawable(
+            	            GradientDrawable.Orientation.TOP_BOTTOM,
+            	            new int[] {0x33000000,0x330000FF});
+            	    gd.setCornerRadius(0f);
+            	row.setBackgroundDrawable(gd);
+            }
+            
+            if(riddle.getCreatedby().equals(mUser.getUserName())){
+            	row.setBackgroundColor(Color.YELLOW);
+            	row.setClickable(false);
+            }
+            
+            
         }
         else
         {
             holder = (RiddleHolder)row.getTag();
         }
-        RiddleSequence riddles = data.get(position);
-        holder.count.setText((position+1)+"");
-        holder.txtTitle.setText(riddles.getRiddletitle());
-        RiddlesStarted started = new RiddlesStarted(riddles.getId(), 0, false, false, false, false);
-        int index;
-        if( (index = started.isIn(mUser.getRiddlesStarted())) != -1){
-        	int curRid = mUser.getRiddlesStarted().get(index).getCurrentRiddle();
-        	if(curRid == 3){
-        		if(mUser.getRiddlesStarted().get(index).isFinishedWithoutSkip()){
-        			holder.currentRiddle.setVisibility(View.GONE);
-        			holder.medal.setVisibility(View.VISIBLE);
-                	row.setClickable(false);
-        		}
-        		if(mUser.getRiddlesStarted().get(index).isFinishedWithSkip()){
-        			holder.currentRiddle.setVisibility(View.GONE);
-        			holder.medal.setImageResource(R.drawable.gold_medal_skip);
-        			holder.medal.setVisibility(View.VISIBLE);
-                	row.setClickable(false);
-        		}
-        		else
-        			holder.currentRiddle.setText(curRid+"");
-        		
-        	}
-        	else
-    			holder.currentRiddle.setText(curRid+"");
 
-        }
-        
-        
-        if(position % 2 == 0){
-        	row.setBackgroundColor(Color.WHITE);
-        }else{
-        	   GradientDrawable gd = new GradientDrawable(
-        	            GradientDrawable.Orientation.TOP_BOTTOM,
-        	            new int[] {0x33000000,0x330000FF});
-        	    gd.setCornerRadius(0f);
-        	row.setBackgroundDrawable(gd);
-        }
-        
-        if(riddles.getCreatedby().equals(mUser.getUserName())){
-        	row.setBackgroundColor(Color.YELLOW);
-        	row.setClickable(false);
-        }
         return row;
     }
     

@@ -15,11 +15,11 @@ import org.apache.http.protocol.HTTP;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.richmond.riddler.AbstractGetNameTask;
-import com.richmond.riddler.Web;
-
 import android.os.AsyncTask;
 import android.util.Log;
+
+import com.richmond.riddler.AbstractGetNameTask;
+import com.richmond.riddler.Web;
 
 public class HttpRequests extends AsyncTask<Void, Void, HttpResponse> {
 	private HttpPut mPut;
